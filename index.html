@@ -7,106 +7,171 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --steel-grey: #e2e8f0; --royal-blue: #102a43; --gold: #d4af37; }
-        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; text-align: right; }
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
         /* Header */
         .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
-        .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.85em; font-weight: bold; overflow: hidden; white-space: nowrap; }
-        .ticker div { display: inline-block; animation: scroll 20s linear infinite; }
+        .header h1 span { color: var(--gold); }
+        .sub-header-text { margin-top: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.6; }
+        
+        /* Ticker */
+        .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; direction: ltr; }
+        .ticker div { display: inline-block; animation: scroll 25s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
         /* Founders Section */
-        .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
+        .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; direction: ltr; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
-        .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; background: #eee; }
-        .founder-card span { display: block; font-size: 0.8em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 2px 5px; text-transform: uppercase; }
+        .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; }
+        .founder-card span { display: block; font-size: 0.75em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.7); border-radius: 5px; padding: 2px; }
 
         /* Services Grid */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; padding: 20px; max-width: 1000px; margin: 0 auto; }
-        .card { background: var(--royal-blue); padding: 30px; border-radius: 15px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; direction: rtl; }
+        .card { background: var(--royal-blue); padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
         .card:hover { transform: translateY(-5px); border-color: var(--gold); }
-        .card i { font-size: 2.5em; display: block; margin-bottom: 15px; color: var(--gold); }
+        .card h3 { margin: 10px 0 5px; font-size: 1.1em; color: var(--gold); }
+        .card p { font-size: 0.85em; margin: 2px 0; opacity: 0.9; }
         
-        /* Modal System - تم التأكد من عمله */
-        #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; }
-        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 450px; color: #333; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
-        .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
+        /* Modal System */
+        #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; padding: 20px; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; direction: rtl; }
+        .modal-desc { font-size: 0.9em; margin-bottom: 15px; line-height: 1.6; color: #555; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .trust-note { font-size: 0.75em; color: #777; margin-top: 10px; text-align: center; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; }
+        .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
         /* Widgets */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 4000; border: 2px solid var(--gold); }
-        #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; z-index: 4000; border: 1px solid #ddd; }
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid var(--gold); z-index: 4000; }
+        #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 0.8em; border: 1px solid #ddd; z-index: 4000; }
         
         /* Footer */
-        .footer-main { background: var(--royal-blue); padding: 40px; text-align: center; color: #a0aec0; border-top: 4px solid var(--gold); margin-top: 30px; }
-        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; color: #333; font-size: 0.9em; }
-        .footer-legal a { margin: 0 10px; color: #007bff; text-decoration: none; }
+        .footer-main { background: var(--royal-blue); padding: 30px; text-align: center; color: white; border-top: 4px solid var(--gold); }
+        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; direction: rtl; }
     </style>
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
-    <div class="header"><h1>INDONESIA DIGITAL <span>FOUNDATION</span> ⚜️</h1><p>Premium Academic & AI Business Solutions</p></div>
-    <div class="ticker"><div> ⚡ AI SOLUTIONS ACTIVE | 🎓 2026 ADMISSIONS OPEN | 🛡️ SECURE GATEWAY </div></div>
+    
+    <div class="header">
+        <h1>INDONESIA DIGITAL <span>FOUNDATION</span> ⚜️</h1>
+        <div class="sub-header-text">
+            حلول رقمية متقدمة تجمع بين الذكاء الاصطناعي والخبرة المؤسسية<br>
+            Advanced digital solutions powered by AI and institutional expertise
+        </div>
+    </div>
+
+    <div class="ticker"><div> ⚡ AI SOLUTIONS ACTIVE | 🎓 2026 ADMISSIONS OPEN | 🛡️ SECURE DATA GATEWAY | 💼 PROFESSIONAL CONSULTANCY </div></div>
 
     <div class="founders-section">
-        <div class="founder-card" id="founder1"><img src="director.jpg" alt="Director"><span>Director</span></div>
-        <div class="founder-card" id="founder2"><img src="partner.jpg" alt="Partner"><span>Partner</span></div>
+        <div class="founder-card" id="founder1"><img src="director.jpg" alt="Director"><span>DIRECTOR</span></div>
+        <div class="founder-card" id="founder2"><img src="partner.jpg" alt="Partner"><span>PARTNER</span></div>
     </div>
 
     <div class="services-grid">
-        <div class="card" onclick="openStep1('Student Services')"><i>🎓</i><h3>Student Services</h3></div>
-        <div class="card" onclick="openStep1('Excel Systems')"><i>📊</i><h3>Excel Systems</h3></div>
-        <div class="card" onclick="openStep1('AI Solutions')"><i>🤖</i><h3>AI Solutions</h3></div>
-        <div class="card" onclick="openStep1('Online Stores')"><i>🛍️</i><h3>Online Stores</h3></div>
-        <div class="card" onclick="openStep1('Fin-Tech')"><i>🏦</i><h3>Fin-Tech</h3></div>
-        <div class="card" onclick="openStep1('Legal Support')"><i>⚖️</i><h3>Legal Support</h3></div>
+        <div class="card" onclick="openStep1('Student Services')">
+            <h3>🎓 Student Services</h3>
+            <p>AR: From Application to Acceptance</p>
+            <p>EN: Academic & Admission Support</p>
+        </div>
+        <div class="card" onclick="openStep1('AI Solutions')">
+            <h3>🤖 AI Solutions</h3>
+            <p>AR: Smart AI for Business Growth</p>
+            <p>EN: Advanced AI Solutions</p>
+        </div>
+        <div class="card" onclick="openStep1('Excel Systems')">
+            <h3>📊 Excel Systems</h3>
+            <p>AR: Smart Automation Systems</p>
+            <p>EN: Excel Automation & Dashboards</p>
+        </div>
+        <div class="card" onclick="openStep1('Online Stores')">
+            <h3>🛍️ Online Stores</h3>
+            <p>AR: Launch Your eCommerce</p>
+            <p>EN: Professional Online Stores</p>
+        </div>
+        <div class="card" onclick="openStep1('Fin-Tech')">
+            <h3>🏦 Fin-Tech</h3>
+            <p>AR: Digital Financial Systems</p>
+            <p>EN: Fin-Tech & Payment Solutions</p>
+        </div>
+        <div class="card" onclick="openStep1('Legal Support')">
+            <h3>⚖️ Legal Support</h3>
+            <p>AR: Business Legal Protection</p>
+            <p>EN: Corporate Legal Services</p>
+        </div>
+        <div class="card" onclick="openStep1('AI Business Booster')" style="border: 2px solid var(--gold);">
+            <h3>🚀 AI Business Booster</h3>
+            <p>AR: Premium Growth Program</p>
+            <p>EN: Executive AI Growth Plan</p>
+        </div>
     </div>
 
     <div id="service-modal">
         <div class="modal-content">
-            <h2 id="modal-title" style="color:var(--royal-blue);">Request</h2>
-            <input type="text" placeholder="Full Name">
-            <input type="text" placeholder="WhatsApp / Email">
-            <textarea placeholder="Tell us more about your needs..."></textarea>
-            <button class="btn-gold" onclick="alert('Request sent to Director! We will contact you soon.')">SUBMIT REQUEST</button>
-            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:15px; cursor:pointer;">Close</button>
+            <h2 id="modal-title" style="color:var(--royal-blue); margin-bottom:5px;">Request</h2>
+            <div id="modal-desc" class="modal-desc"></div>
+            
+            <input type="text" id="user-name" placeholder="Full Name / الاسم الكامل">
+            <input type="text" id="user-contact" placeholder="WhatsApp / Email">
+            <textarea id="user-note" rows="4" placeholder="How can we help you? / كيف يمكننا مساعدتك؟"></textarea>
+            
+            <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST / إرسال الطلب</button>
+            <p class="trust-note">
+                جميع الطلبات تُعالج بسرية تامة وتخضع لمراجعة إدارية ونظام ذكاء اصطناعي.<br>
+                All requests are handled confidentially and reviewed by AI and management systems.
+            </p>
+            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer; font-weight:bold;">CLOSE / إغلاق</button>
         </div>
     </div>
 
-    <div id="track-trigger" onclick="alert('Status: Order under review by PT DANTSU.')">🔍 Track Order</div>
-    <div id="chat-trigger" onclick="alert('AI Chatbot is initializing...')">💬</div>
+    <div id="track-trigger" onclick="alert('حالة الطلب: قيد المراجعة الإدارية.\nOrder Status: Under Administrative Review.')">🔍 Track Order</div>
+    <div id="chat-trigger" onclick="alert('المساعد الذكي جاهز لمساعدتك.\nAI Assistant is ready to support you.')">💬</div>
 
-    <footer class="footer-main"><h3>INDONESIA DIGITAL FOUNDATION</h3><p>Jakarta • London • Dubai</p></footer>
+    <footer class="footer-main">
+        <h3>INDONESIA DIGITAL FOUNDATION</h3>
+        <p>Jakarta • London • Dubai</p>
+    </footer>
+
     <footer class="footer-legal">
         <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
-        <div><a href="terms.html">Terms</a> | <a href="policy.html">Privacy</a></div>
+        <p style="margin-top:10px; font-size:0.8em; opacity:0.8;">
+            جميع الخدمات المقدمة عبر Indonesia Digital Foundation تخضع للأنظمة والقوانين المعمول بها. لا يتم مشاركة أي بيانات مع أطراف خارجية.<br>
+            All services provided by Indonesia Digital Foundation comply with applicable regulations. No personal data is shared with third parties.
+        </p>
     </footer>
 
     <script>
-        // دالة فتح نافذة الخدمات
-        function openStep1(serviceName) {
-            document.getElementById('modal-title').innerText = "Order: " + serviceName;
+        const modalData = {
+            'Student Services': "يرجى تزويدنا بمعلوماتك الأكاديمية ليتم تحليل طلبك من قبل فريق القبول.\nPlease provide your academic details for review by our admission specialists.",
+            'AI Solutions': "اشرح لنا طبيعة مشروعك لنقترح لك حلول ذكاء اصطناعي مناسبة.\nDescribe your project to receive a customized AI solution proposal.",
+            'Excel Systems': "أرسل تفاصيل عملك وسنحوّل ملفاتك إلى نظام ذكي احترافي.\nShare your workflow and we’ll build a smart Excel-based system for you.",
+            'Online Stores': "حدد نوع متجرك وسنقوم ببنائه وتشغيله باحتراف.\nTell us about your store and we’ll handle setup and launch.",
+            'Fin-Tech': "قدّم تفاصيلك المالية ليتم تصميم نظام آمن وفعال.\nProvide your financial requirements for a secure digital solution.",
+            'Legal Support': "اشرح نوع الدعم القانوني المطلوب وسيتم التواصل معك بسرية تامة.\nDescribe your legal needs and our team will contact you confidentially.",
+            'AI Business Booster': "برنامج تنفيذي خاص – سيتم التواصل معك مباشرة من الإدارة العليا.\nExecutive-level program – reviewed directly by senior management."
+        };
+
+        function openStep1(name) {
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-desc').innerText = modalData[name] || "";
             document.getElementById('service-modal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('service-modal').style.display = 'none';
+        function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
+
+        function submitOrder() {
+            alert("تم استلام طلبك بنجاح. سيتم مراجعته عبر النظام الذكي والتواصل معك قريبًا.\n\nYour request has been received. It is under AI & management review.");
+            closeModal();
         }
 
-        // تحريك صور المؤسسين
         function pulseFounders() {
-            const f1 = document.getElementById('founder1');
-            const f2 = document.getElementById('founder2');
-            if(f1 && f2) {
-                f1.classList.add('show'); f2.classList.add('show');
-                setTimeout(() => { f1.classList.remove('show'); f2.classList.remove('show'); }, 5000);
-            }
+            const f1 = document.getElementById('founder1'); const f2 = document.getElementById('founder2');
+            if(f1 && f2) { f1.classList.add('show'); f2.classList.add('show'); setTimeout(() => { f1.classList.remove('show'); f2.classList.remove('show'); }, 5000); }
         }
         setInterval(pulseFounders, 10000);
 
-        // الخلفية المتحركة
         const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = Array(40).fill().map(() => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, v: Math.random() * 0.4 }));
@@ -114,4 +179,5 @@
         draw(); pulseFounders();
     </script>
 </body>
-</html>
+    </html>
+    
