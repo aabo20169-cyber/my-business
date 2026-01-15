@@ -7,41 +7,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --steel-grey: #e2e8f0; --royal-blue: #102a43; --gold: #d4af37; }
-        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; text-align: center; }
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
+        /* Header & Banner */
         .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
         .sub-header-text { margin-top: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.6; }
         
+        /* News Ticker */
         .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; }
         .ticker div { display: inline-block; animation: scroll 25s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
+        /* Founder Pulse */
         .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
         .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; }
         .founder-card span { display: block; font-size: 0.75em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.7); border-radius: 5px; padding: 2px; }
 
+        /* Services Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .card { background: var(--royal-blue); padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
         .card:hover { transform: translateY(-5px); border-color: var(--gold); }
         .card h3 { margin: 10px 0 5px; font-size: 1.1em; color: var(--gold); }
         .card p { font-size: 0.85em; margin: 2px 0; opacity: 0.9; }
         
+        /* Request Modal */
         #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; padding: 20px; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; text-align: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; }
         .modal-desc { font-size: 0.9em; margin-bottom: 15px; line-height: 1.6; color: #555; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .trust-note { font-size: 0.75em; color: #777; margin-top: 10px; }
         
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Arial', sans-serif; text-align: left; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: sans-serif; text-align: left; }
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
+        /* Navigation Buttons */
         #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid var(--gold); z-index: 4000; }
         #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 0.8em; border: 1px solid #ddd; z-index: 4000; }
         
-        .footer-main { background: var(--royal-blue); padding: 30px; text-align: center; color: white; border-top: 4px solid var(--gold); }
-        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; }
+        /* Corporate Footers */
+        .footer-main { background: var(--royal-blue); padding: 30px; text-align: center; color: white; border-top: 4px solid var(--gold); margin-top: 30px; }
+        .footer-legal { background: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -50,7 +57,6 @@
     <div class="header">
         <h1>INDONESIA DIGITAL <span>FOUNDATION</span> ⚜️</h1>
         <div class="sub-header-text">
-            حلول رقمية متقدمة تجمع بين الذكاء الاصطناعي والخبرة المؤسسية<br>
             Advanced digital solutions powered by AI and institutional expertise
         </div>
     </div>
@@ -65,38 +71,38 @@
     <div class="services-grid">
         <div class="card" onclick="openStep1('Student Services')">
             <h3>🎓 Student Services</h3>
-            <p>AR: From Application to Acceptance</p>
-            <p>EN: Academic & Admission Support</p>
+            <p>Academic & Admission Support</p>
+            <p style="font-size:0.7em; opacity:0.7;">From Application to Acceptance</p>
         </div>
         <div class="card" onclick="openStep1('AI Solutions')">
             <h3>🤖 AI Solutions</h3>
-            <p>AR: Smart AI for Business Growth</p>
-            <p>EN: Advanced AI Solutions</p>
+            <p>Advanced AI Solutions</p>
+            <p style="font-size:0.7em; opacity:0.7;">Smart AI for Business Growth</p>
         </div>
         <div class="card" onclick="openStep1('Excel Systems')">
             <h3>📊 Excel Systems</h3>
-            <p>AR: Smart Automation Systems</p>
-            <p>EN: Excel Automation & Dashboards</p>
+            <p>Excel Automation & Dashboards</p>
+            <p style="font-size:0.7em; opacity:0.7;">Smart Automation Systems</p>
         </div>
         <div class="card" onclick="openStep1('Online Stores')">
             <h3>🛍️ Online Stores</h3>
-            <p>AR: Launch Your eCommerce</p>
-            <p>EN: Professional Online Stores</p>
+            <p>Professional Online Stores</p>
+            <p style="font-size:0.7em; opacity:0.7;">Launch Your eCommerce</p>
         </div>
         <div class="card" onclick="openStep1('Fin-Tech')">
             <h3>🏦 Fin-Tech</h3>
-            <p>AR: Digital Financial Systems</p>
-            <p>EN: Fin-Tech & Payment Solutions</p>
+            <p>Fin-Tech & Payment Solutions</p>
+            <p style="font-size:0.7em; opacity:0.7;">Digital Financial Systems</p>
         </div>
         <div class="card" onclick="openStep1('Legal Support')">
             <h3>⚖️ Legal Support</h3>
-            <p>AR: Business Legal Protection</p>
-            <p>EN: Corporate Legal Services</p>
+            <p>Corporate Legal Services</p>
+            <p style="font-size:0.7em; opacity:0.7;">Business Legal Protection</p>
         </div>
         <div class="card" onclick="openStep1('AI Business Booster')" style="border: 2px solid var(--gold);">
             <h3>🚀 AI Business Booster</h3>
-            <p>AR: Premium Growth Program</p>
-            <p>EN: Executive AI Growth Plan</p>
+            <p>Executive AI Growth Plan</p>
+            <p style="font-size:0.7em; opacity:0.7;">Premium Growth Program</p>
         </div>
     </div>
 
@@ -109,17 +115,16 @@
             <input type="text" id="user-contact" placeholder="WhatsApp / Email">
             <textarea id="user-note" rows="4" placeholder="How can we help you?"></textarea>
             
-            <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST / إرسال الطلب</button>
+            <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST</button>
             <p class="trust-note">
-                جميع الطلبات تُعالج بسرية تامة وتخضع لمراجعة إدارية ونظام ذكاء اصطناعي.<br>
                 All requests are handled confidentially and reviewed by AI and management systems.
             </p>
-            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer; font-weight:bold;">CLOSE / إغلاق</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer; font-weight:bold;">CLOSE</button>
         </div>
     </div>
 
-    <div id="track-trigger" onclick="alert('حالة الطلب: قيد المراجعة الإدارية.\nOrder Status: Under Administrative Review.')">🔍 Track Order</div>
-    <div id="chat-trigger" onclick="alert('المساعد الذكي جاهز لمساعدتك.\nAI Assistant is ready to support you.')">💬</div>
+    <div id="track-trigger" onclick="alert('Order Status: Under Administrative Review.')">🔍 Track Order</div>
+    <div id="chat-trigger" onclick="alert('AI Assistant is ready to support you.')">💬</div>
 
     <footer class="footer-main">
         <h3>INDONESIA DIGITAL FOUNDATION</h3>
@@ -127,22 +132,22 @@
     </footer>
 
     <footer class="footer-legal">
-        <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
-        <p style="margin-top:10px; font-size:0.8em; opacity:0.8; max-width: 800px; margin-left: auto; margin-right: auto;">
-            جميع الخدمات المقدمة عبر Indonesia Digital Foundation تخضع للأنظمة والقوانين المعمول بها. لا يتم مشاركة أي بيانات مع أطراف خارجية.<br>
-            All services provided by Indonesia Digital Foundation comply with applicable regulations. No personal data is shared with third parties.
+        <p><strong>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</strong></p>
+        <p style="margin-top:10px; font-size:0.85em; opacity:0.9; max-width: 800px; margin-left: auto; margin-right: auto;">
+            All services provided via Indonesia Digital Foundation are subject to applicable laws and regulations. 
+            Personal data is handled with strict confidentiality and is never shared with third parties.
         </p>
     </footer>
 
     <script>
         const modalData = {
-            'Student Services': "يرجى تزويدنا بمعلوماتك الأكاديمية ليتم تحليل طلبك من قبل فريق القبول.\nPlease provide your academic details for review by our admission specialists.",
-            'AI Solutions': "اشرح لنا طبيعة مشروعك لنقترح لك حلول ذكاء اصطناعي مناسبة.\nDescribe your project to receive a customized AI solution proposal.",
-            'Excel Systems': "أرسل تفاصيل عملك وسنحوّل ملفاتك إلى نظام ذكي احترافي.\nShare your workflow and we’ll build a smart Excel-based system for you.",
-            'Online Stores': "حدد نوع متجرك وسنقوم ببنائه وتشغيله باحتراف.\nTell us about your store and we’ll handle setup and launch.",
-            'Fin-Tech': "قدّم تفاصيلك المالية ليتم تصميم نظام آمن وفعال.\nProvide your financial requirements for a secure digital solution.",
-            'Legal Support': "اشرح نوع الدعم القانوني المطلوب وسيتم التواصل معك بسرية تامة.\nDescribe your legal needs and our team will contact you confidentially.",
-            'AI Business Booster': "برنامج تنفيذي خاص – سيتم التواصل معك مباشرة من الإدارة العليا.\nExecutive-level program – reviewed directly by senior management."
+            'Student Services': "Please provide your academic details for review by our admission specialists.",
+            'AI Solutions': "Describe your project to receive a customized AI solution proposal.",
+            'Excel Systems': "Share your workflow and we’ll build a smart Excel-based system for you.",
+            'Online Stores': "Tell us about your store and we’ll handle setup and launch.",
+            'Fin-Tech': "Provide your financial requirements for a secure digital solution.",
+            'Legal Support': "Describe your legal needs and our team will contact you confidentially.",
+            'AI Business Booster': "Executive-level program – reviewed directly by senior management."
         };
 
         function openStep1(name) {
@@ -154,7 +159,7 @@
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
 
         function submitOrder() {
-            alert("تم استلام طلبك بنجاح. سيتم مراجعته عبر النظام الذكي والتواصل معك قريبًا.\n\nYour request has been received. It is under AI & management review.");
+            alert("Your request has been received.\nIt is currently under AI & management review.");
             closeModal();
         }
 
