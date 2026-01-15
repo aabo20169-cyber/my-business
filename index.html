@@ -3,98 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PT DANTSU CIPTA ENERGY | Official Portal</title>
+    <title>PT DANTSU | Indonesia Digital Foundation</title>
     <style>
-        :root { --gold: #c5a059; --royal-blue: #002366; --dark: #0a0a0a; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--dark); color: white; line-height: 1.6; }
-        
-        /* Header Section */
-        .header { background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80'); background-size: cover; padding: 80px 20px; text-align: center; border-bottom: 4px solid var(--gold); }
-        .ticker { background: var(--gold); color: black; padding: 10px; font-weight: bold; font-size: 14px; }
-
-        /* Services Section */
-        .container { max-width: 1200px; margin: auto; padding: 50px 20px; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: #1a1a1a; padding: 40px; border-radius: 20px; border: 1px solid #333; text-align: center; transition: 0.4s; position: relative; overflow: hidden; }
-        .card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(197, 160, 89, 0.2); }
-        .card i { font-size: 50px; color: var(--gold); margin-bottom: 20px; display: block; }
-        .card h3 { font-size: 24px; margin-bottom: 15px; color: var(--gold); }
-        .btn-select { background: var(--gold); color: black; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-
-        /* AI Assistant */
-        #ai-window { position: fixed; bottom: 100px; right: 20px; width: 350px; background: white; border-radius: 15px; box-shadow: 0 15px 50px rgba(0,0,0,0.5); display: none; z-index: 10000; color: #333; }
-        .ai-header { background: var(--royal-blue); color: white; padding: 15px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; align-items: center; }
-        #ai-messages { height: 300px; overflow-y: auto; padding: 20px; background: #f4f7f6; }
-        .ai-input-area { padding: 15px; display: flex; border-top: 1px solid #eee; }
-        
-        /* Footer */
-        footer { background: #000; padding: 60px 20px; text-align: center; border-top: 2px solid var(--gold); margin-top: 50px; }
-        .footer-links a { color: var(--gold); text-decoration: none; margin: 0 15px; font-size: 14px; }
+        /* نفس ستايل الألوان والخطوط الخاص بك */
+        :root { --royal-blue: #002366; --gold: #c5a059; --steel-grey: #e2e8f0; }
+        body { font-family: 'Cairo', sans-serif; margin: 0; background: #0a0a0a; color: white; }
+        .header { background: var(--royal-blue); padding: 40px; text-align: center; border-bottom: 4px solid var(--gold); }
+        .ticker { background: var(--gold); color: black; padding: 10px; font-weight: bold; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
+        .card { background: #1a1a1a; padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; }
+        /* تصميم نافذة الذكاء الاصطناعي */
+        #ai-window { position: fixed; bottom: 80px; right: 20px; width: 320px; background: white; border-radius: 15px; display: none; color: #333; z-index: 10000; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1 style="font-size: 3.5em; margin: 0;">PT DANTSU CIPTA ENERGY</h1>
-        <p style="font-size: 1.2em; color: var(--gold);">Global Logistics & Digital Excellence Solutions</p>
+        <h1>PT DANTSU CIPTA ENERGY</h1>
+        <p>Your Trusted Partner in Energy & Digital Solutions</p>
     </div>
 
     <div class="ticker">
-        <marquee scrollamount="6">NIB: 0603230074983 | Indonesia Digital Foundation Registered | Global Energy Export Active | Trusted by Clients Worldwide</marquee>
+        <marquee>NIB: 0603230074983 | Indonesia Digital Foundation | Secure Global Payments Active</marquee>
     </div>
 
-    <div class="container">
-        <h2 style="text-align: center; margin-bottom: 40px; font-size: 2em;">Our Premium Services</h2>
-        <div class="services-grid">
-            <div class="card">
-                <i>🎓</i>
-                <h3>Student Services</h3>
-                <p>Advanced academic support, AI research assistance, and digital educational consulting tailored for international standards.</p>
-                <button class="btn-select" onclick="handleOrder('Student Services')">Select Plan</button>
-            </div>
-            <div class="card">
-                <i>📊</i>
-                <h3>Excel Systems</h3>
-                <p>Custom automated business dashboards, data analysis tools, and specialized financial reporting systems for corporations.</p>
-                <button class="btn-select" onclick="handleOrder('Excel Systems')">Select Plan</button>
-            </div>
-            <div class="card">
-                <i>🚢</i>
-                <h3>Energy Export</h3>
-                <p>Reliable global supply chain for coal and renewable energy resources, fully licensed by the Republic of Indonesia.</p>
-                <button class="btn-select" onclick="handleOrder('Energy Export')">Select Plan</button>
-            </div>
+    <div class="services-grid">
+        <div class="card">
+            <i>🎓</i>
+            <h3>Student Services</h3>
+            <p>Premium Academic Support & Research Assistance.</p>
+            <button onclick="handleOrder('Student Services')" style="background:var(--gold); border:none; padding:10px; border-radius:5px; cursor:pointer;">Select Plan</button>
+        </div>
+        <div class="card">
+            <i>📊</i>
+            <h3>Excel Systems</h3>
+            <p>Automated Business Dashboards & Data Management.</p>
+            <button onclick="handleOrder('Excel Systems')" style="background:var(--gold); border:none; padding:10px; border-radius:5px; cursor:pointer;">Select Plan</button>
+        </div>
+        <div class="card">
+            <i>🚢</i>
+            <h3>Energy Export</h3>
+            <p>Reliable Global Supply of Coal & Energy Resources.</p>
+            <button onclick="handleOrder('Energy Export')" style="background:var(--gold); border:none; padding:10px; border-radius:5px; cursor:pointer;">Select Plan</button>
         </div>
     </div>
 
-    <div id="ai-chat-bubble" onclick="toggleAIChat()" style="position: fixed; bottom: 30px; right: 30px; background: var(--gold); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; cursor: pointer; z-index: 10001; box-shadow: 0 10px 30px rgba(197, 160, 89, 0.4);">
+    <div id="ai-chat-bubble" onclick="toggleAIChat()" style="position: fixed; bottom: 20px; right: 20px; background: var(--gold); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer;">
         🤖
     </div>
 
     <div id="ai-window">
-        <div class="ai-header">
-            <span style="font-weight: bold;">AI Assistant - PT DANTSU</span>
-            <span onclick="toggleAIChat()" style="cursor: pointer; font-size: 24px;">&times;</span>
+        <div style="background: var(--royal-blue); color: white; padding: 15px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between;">
+            <span>AI Business Assistant</span>
+            <span onclick="toggleAIChat()" style="cursor: pointer;">&times;</span>
         </div>
-        <div id="ai-messages">
-            <div style="background: #e2e8f0; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 14px;">
-                Hello! Welcome to <strong>PT DANTSU</strong>. How can I help you with our services or NIB registration (0603230074983) today?
-            </div>
+        <div id="ai-messages" style="height: 250px; overflow-y: auto; padding: 15px; background: #f8f9fa;">
+            Welcome to <strong>PT DANTSU</strong>. How can we help you with our services today?
         </div>
-        <div class="ai-input-area">
-            <input type="text" id="ai-user-input" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="Write your message...">
-            <button onclick="sendAI()" style="margin-left: 10px; background: var(--royal-blue); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Send</button>
+        <div style="padding: 10px; display: flex; background: white; border-top: 1px solid #ddd;">
+            <input type="text" id="ai-user-input" style="flex: 1; padding: 8px;" placeholder="Type message...">
+            <button onclick="sendAI()" style="background: var(--royal-blue); color: white; border: none; padding: 8px 15px; cursor: pointer;">Send</button>
         </div>
     </div>
 
-    <footer>
-        <h3 style="color: var(--gold); margin-bottom: 10px;">PT DANTSU CIPTA ENERGY</h3>
-        <p style="font-size: 14px; opacity: 0.8;">Summarecon Bekasi, West Java, Indonesia | NIB: 0603230074983</p>
-        <div class="footer-links" style="margin: 30px 0;">
-            <a href="terms.html">Terms & Conditions</a>
-            <a href="policy.html">Privacy & Refund Policy</a>
+    <footer style="background: #000; padding: 40px; text-align: center; border-top: 1px solid var(--gold);">
+        <p>© 2026 PT DANTSU CIPTA ENERGY | NIB: 0603230074983</p>
+        <div style="margin: 15px 0;">
+            <a href="terms.html" style="color: var(--gold); text-decoration: none; margin: 0 10px;">Terms</a>
+            <a href="policy.html" style="color: var(--gold); text-decoration: none; margin: 0 10px;">Privacy Policy</a>
         </div>
-        <p style="font-size: 11px; opacity: 0.4;">&copy; 2026 PT DANTSU. All Rights Reserved.</p>
     </footer>
 
     <script>
@@ -103,12 +80,12 @@
             win.style.display = (win.style.display === 'none' || win.style.display === '') ? 'block' : 'none';
         }
 
-        // Fix for "Check Termux" issue
+        // إصلاح مشكلة الرسالة المزعجة (The fix for Termux issue)
         function handleOrder(service) {
-            const userChoice = confirm("You have selected: " + service + "\n\nWould you like to proceed to the secure payment gateway provided by Xendit?");
-            if (userChoice) {
-                alert("Preparing secure payment link for " + service + "...\nPlease wait a moment.");
-                // Tomorrow we will link this to the actual Xendit API
+            const confirmAction = confirm("Do you want to proceed with: " + service + "?");
+            if (confirmAction) {
+                alert("Processing your request... Connecting to Payment Gateway.");
+                // هذا هو المكان الذي سنربطه بـ Xendit غداً
             }
         }
 
@@ -116,7 +93,7 @@
             const input = document.getElementById('ai-user-input');
             const msgArea = document.getElementById('ai-messages');
             if (input.value.trim() !== "") {
-                msgArea.innerHTML += `<div style="text-align: right; margin-bottom: 15px;"><span style="background: var(--royal-blue); color: white; padding: 10px 15px; border-radius: 12px; display: inline-block; font-size: 14px;">${input.value}</span></div>`;
+                msgArea.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: var(--royal-blue); color: white; padding: 8px 12px; border-radius: 10px; display: inline-block;">${input.value}</span></div>`;
                 input.value = "";
                 msgArea.scrollTop = msgArea.scrollHeight;
             }
