@@ -15,12 +15,12 @@
         .ticker div { display: inline-block; animation: scroll 20s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
-        /* --- تنسيق صور المؤسسين --- */
+        /* --- Founders Section --- */
         .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
         .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; background: #eee; }
-        .founder-card span { display: block; font-size: 0.8em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.6); border-radius: 10px; }
+        .founder-card span { display: block; font-size: 0.8em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.6); border-radius: 10px; padding: 2px 5px; text-transform: uppercase; }
 
         .intro-box { background: rgba(255, 255, 255, 0.7); margin: 15px auto; padding: 20px; max-width: 850px; border-radius: 10px; border-left: 6px solid var(--royal-blue); color: #102a43; }
         
@@ -41,10 +41,12 @@
 
         #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; justify-content:center; align-items:center; }
         .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 450px; color: #333; max-height: 90vh; overflow-y: auto; }
-        .footer { background: var(--royal-blue); padding: 40px; text-align: center; color: #a0aec0; border-top: 4px solid var(--gold); margin-top: 30px; }
+        .footer-main { background: var(--royal-blue); padding: 40px; text-align: center; color: #a0aec0; border-top: 4px solid var(--gold); margin-top: 30px; }
+        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; color: #333; font-size: 0.9em; }
+        .footer-legal a { margin: 0 10px; color: #007bff; text-decoration: none; }
+        
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Cairo'; }
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
-        .sub-btn { background: #f8fafc; border: 1px solid #ddd; padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -60,11 +62,11 @@
     <div class="founders-section">
         <div class="founder-card" id="founder1">
             <img src="director.jpg" alt="Director">
-            <span>المدير</span>
+            <span>Director</span>
         </div>
         <div class="founder-card" id="founder2">
             <img src="partner.jpg" alt="Partner">
-            <span>الشريك</span>
+            <span>Partner</span>
         </div>
     </div>
 
@@ -87,44 +89,34 @@
     <div id="chat-window">
         <div class="chat-header"><span>IDF AI Assistant</span><span style="cursor:pointer" onclick="toggleChat()">×</span></div>
         <a href="https://wa.me/6281118895901" target="_blank" class="wa-fast-btn">Contact WhatsApp Directly ✅</a>
-        <div id="chat-body"><div class="msg bot" id="initial-msg">مرحباً بك.. كيف يمكنني مساعدتك؟</div></div>
+        <div id="chat-body"><div class="msg bot">Welcome! How can we help you today?</div></div>
         <div style="padding:10px; display:flex; gap:5px; border-top:1px solid #eee;">
-            <input type="text" id="chat-input" style="margin:0;" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter') handleChatLogic()">
-            <button onclick="handleChatLogic()" style="background:var(--royal-blue); color:white; border:none; padding:5px; border-radius:5px;">إرسال</button>
+            <input type="text" id="chat-input" style="margin:0;" placeholder="Type a message..." onkeypress="if(event.key==='Enter') handleChatLogic()">
+            <button onclick="handleChatLogic()" style="background:var(--royal-blue); color:white; border:none; padding:5px; border-radius:5px;">Send</button>
         </div>
     </div>
 
-    <div id="service-modal">
-        <div class="modal-content">
-            <div id="step-1">
-                <h2 id="modal-title">Request</h2>
-                <input type="text" id="c-name" placeholder="Full Name">
-                <input type="text" id="c-contact" placeholder="Contact Details">
-                <textarea id="c-note" placeholder="How can we help you?"></textarea>
-                <button class="btn-gold" onclick="loadDetailed()">VIEW SERVICES</button>
-            </div>
-            <div id="step-2" style="display:none;"><h3 style="text-align:center;">Select Plan</h3><div id="sub-list"></div></div>
-            <div id="step-3" style="display:none;"><h3 style="text-align:center;">Checkout</h3><button class="btn-gold" onclick="complete('USDT')">I HAVE TRANSFERRED</button></div>
-            <div id="step-4" style="display:none; text-align:center;"><h2 style="color:green;">✔ VERIFIED</h2></div>
-            <button onclick="closeModal()" style="color:red; background:none; border:none; width:100%; margin-top:20px; cursor:pointer;">Cancel</button>
-        </div>
-    </div>
-
-    <footer class="footer">
+    <footer class="footer-main">
         <h3>INDONESIA DIGITAL FOUNDATION</h3>
         <p>Jakarta • London • Dubai</p>
     </footer>
 
-    <footer style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd;">
+    <footer class="footer-legal">
         <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
+        <div style="margin-top: 10px;">
+            <a href="terms.html">Terms & Conditions</a>
+            <a href="policy.html">Privacy Policy</a>
+        </div>
     </footer>
 
     <script>
         function pulseFounders() {
             const f1 = document.getElementById('founder1');
             const f2 = document.getElementById('founder2');
-            f1.classList.add('show'); f2.classList.add('show');
-            setTimeout(() => { f1.classList.remove('show'); f2.classList.remove('show'); }, 5000);
+            if(f1 && f2) {
+                f1.classList.add('show'); f2.classList.add('show');
+                setTimeout(() => { f1.classList.remove('show'); f2.classList.remove('show'); }, 5000);
+            }
         }
         setInterval(pulseFounders, 10000);
 
@@ -134,21 +126,9 @@
         function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#102a43'; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.v; if (p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); } 
         draw(); pulseFounders();
 
-        function trackOrder() { alert("جاري البحث... الحالة: قيد المراجعة الفنية لدى PT DANTSU."); }
+        function trackOrder() { alert("Searching records... Status: Under technical review by PT DANTSU."); }
         function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
-        function openStep1(name) { document.getElementById('modal-title').innerText = name; document.getElementById('service-modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
-
-        let chatStep = 0;
-        function handleChatLogic() {
-            const input = document.getElementById('chat-input'); const body = document.getElementById('chat-body');
-            if(!input.value.trim()) return;
-            body.innerHTML += `<div class="msg user">${input.value}</div>`; input.value = ""; body.scrollTop = body.scrollHeight;
-            setTimeout(() => {
-                let resp = chatStep === 0 ? "أهلاً بك! هل تريد الاستفسار عن الخدمات أم الدفع؟" : "تم إرسال التفاصيل للمدير، تواصل معه عبر الواتساب الآن.";
-                body.innerHTML += `<div class="msg bot">${resp}</div>`; body.scrollTop = body.scrollHeight; chatStep++;
-            }, 800);
-        }
+        function openStep1(name) { alert("Service Request for: " + name); }
     </script>
 </body>
 </html>
