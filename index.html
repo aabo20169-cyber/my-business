@@ -173,6 +173,54 @@
         function reset() { document.getElementById('step-1').style.display='block'; ['step-2','step-3','step-4','usdt-qr','manual-machine'].forEach(i=>document.getElementById(i).style.display='none'); }
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
     </script>
+    <div id="ai-chat-bubble" style="position: fixed; bottom: 30px; right: 20px; z-index: 10000;">
+    <div onclick="toggleAIChat()" style="background: linear-gradient(135deg, #0056b3, #00c6ff); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.4); font-size: 30px; transition: 0.3s;">
+        🤖
+    </div>
+
+    <div id="ai-window" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; height: 450px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; flex-direction: column; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; border: 1px solid #eee;">
+        <div style="background: #0056b3; color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+            <span>AI Support - PT DANTSU</span>
+            <span onclick="toggleAIChat()" style="cursor: pointer; font-size: 20px;">×</span>
+        </div>
+        <div id="ai-messages" style="flex: 1; padding: 15px; overflow-y: auto; background: #fdfdfd; font-size: 14px; line-height: 1.5;">
+            <div style="background: #e9ecef; padding: 10px; border-radius: 10px; margin-bottom: 10px; color: #333;">
+                مرحباً بك في <strong>PT DANTSU CIPTA ENERGY</strong>. أنا مساعدك الذكي، كيف يمكنني خدمتك اليوم؟
+            </div>
+        </div>
+        <div style="padding: 15px; border-top: 1px solid #eee; display: flex; gap: 5px;">
+            <input type="text" id="ai-user-input" placeholder="اكتب سؤالك هنا..." style="flex: 1; border: 1px solid #ddd; padding: 10px; border-radius: 20px; outline: none;">
+            <button onclick="sendAI()" style="background: #0056b3; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">➤</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleAIChat() {
+    const win = document.getElementById('ai-window');
+    win.style.display = (win.style.display === 'none' || win.style.display === '') ? 'flex' : 'none';
+}
+
+function sendAI() {
+    const input = document.getElementById('ai-user-input');
+    const msgArea = document.getElementById('ai-messages');
+    if(input.value.trim() !== "") {
+        // رسالة المستخدم
+        msgArea.innerHTML += `<div style="background: #0056b3; color: white; padding: 10px; border-radius: 10px; margin-bottom: 10px; align-self: flex-end; margin-left: 20px; text-align: right;">${input.value}</div>`;
+        
+        const userQuery = input.value;
+        input.value = "";
+        
+        // رد الذكاء الاصطناعي (محاكاة)
+        setTimeout(() => {
+            msgArea.innerHTML += `<div style="background: #e9ecef; padding: 10px; border-radius: 10px; margin-bottom: 10px; color: #333; margin-right: 20px;">جاري معالجة استفسارك حول "${userQuery}"... سيقوم نظامنا بتوجيهك لأفضل خيارات الطاقة المتوفرة في شركتنا حالياً.</div>`;
+            msgArea.scrollTop = msgArea.scrollHeight;
+        }, 800);
+        msgArea.scrollTop = msgArea.scrollHeight;
+    }
+}
+</script>
+    
     <footer style="background-color: #ffffff; padding: 25px; text-align: center; border-top: 2px solid #0056b3; margin-top: 40px; font-family: Arial, sans-serif;">
     <h3 style="color: #0056b3; margin-bottom: 10px;">PT DANTSU CIPTA ENERGY</h3>
     <p style="color: #333; font-size: 15px; margin: 5px 0;">
