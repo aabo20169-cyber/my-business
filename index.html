@@ -213,18 +213,20 @@ function sendAI() {
         input.value = "";
         
         // تفكير الرد الآلي
-        setTimeout(() => {
-            let response = "مرحباً بك في PT DANTSU. هل يمكنني مساعدتك في معلومات عن تصدير الفحم أو خدماتنا؟";
+                setTimeout(() => {
+            let response = "مرحباً بك في PT DANTSU. لمساعدتك بشكل أسرع، يمكنك التحدث مع الإدارة مباشرة:";
+            response += `<br><br><a href="https://wa.me/6281118895901?text=استفسار من الموقع: ${userText}" target="_blank" style="background: #25d366; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 5px;">✅ مراسلة عبر واتساب</a>`;
             
             if(currentInput.includes("سعر") || currentInput.includes("كم")) {
-                response = "أسعارنا تعتمد على حجم الطلبية ومواصفات الطاقة المطلوبة. يمكنك تسجيل طلب في النموذج أعلاه للحصول على عرض رسمي.";
-            } else if(currentInput.includes("رسمي") || currentInput.includes("قانوني") || currentInput.includes("ترخيص")) {
-                response = "شركتنا مسجلة رسمياً في إندونيسيا برقم NIB: 0603230074983 ومقرنا في Bekasi.";
+                response = "أسعارنا تعتمد على الكمية المطلوبة. يرجى الضغط على زر الواتساب أعلاه لإرسال تفاصيل طلبك للمدير مباشرة.";
+            } else if(currentInput.includes("رسمي") || currentInput.includes("قانوني")) {
+                response = "نحن شركة PT DANTSU المعتمدة برقم NIB: 0603230074983. يمكنك مراسلتنا واتساب للحصول على نسخة من التراخيص.";
             }
 
             msgArea.innerHTML += `<div style="background: #e9ecef; padding: 10px; border-radius: 10px; margin-bottom: 10px; color: #333; margin-right: 20px;">${response}</div>`;
             msgArea.scrollTop = msgArea.scrollHeight;
         }, 800);
+        
         msgArea.scrollTop = msgArea.scrollHeight;
     }
 }
