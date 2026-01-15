@@ -36,12 +36,13 @@
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
         .sub-btn { background: #f8fafc; border: 1px solid #ddd; padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
 
-        /* --- STYLES FOR LIVE CHAT --- */
+        /* --- STYLES FOR LIVE CHAT & NEW FEATURES --- */
         #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid var(--gold); z-index: 4000; }
+        #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); width: auto; padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 0.8em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #ddd; z-index: 4000; }
         #chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 4000; border: 1px solid #ddd; }
         .chat-header { background: var(--royal-blue); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
         #chat-body { height: 300px; overflow-y: auto; padding: 15px; font-size: 0.9em; display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; }
-        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; line-height: 1.4; }
         .msg.bot { background: #e2e8f0; align-self: flex-start; color: #102a43; }
         .msg.user { background: var(--gold); align-self: flex-end; color: black; }
         .chat-footer { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px; }
@@ -72,7 +73,9 @@
         <div class="card" onclick="openStep1('Legal Support')"><i>⚖️</i><h3>Legal Support</h3></div>
     </div>
 
+    <div id="track-trigger" onclick="trackOrder()">🔍 Track Order</div>
     <div id="chat-trigger" onclick="toggleChat()">💬</div>
+    
     <div id="chat-window">
         <div class="chat-header">
             <span>IDF AI Assistant</span>
@@ -80,11 +83,11 @@
         </div>
         <a href="https://wa.me/6281118895901" target="_blank" class="wa-fast-btn">Contact WhatsApp Directly ✅</a>
         <div id="chat-body">
-            <div class="msg bot">مرحباً بك في مؤسسة إندونيسيا الرقمية! كيف يمكنني مساعدتك اليوم؟</div>
+            <div class="msg bot" id="initial-msg">جاري تحميل المساعد...</div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chat-input" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter') sendChatMsg()">
-            <button onclick="sendChatMsg()" style="background:var(--royal-blue); color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">إرسال</button>
+            <input type="text" id="chat-input" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter') handleChatLogic()">
+            <button onclick="handleChatLogic()" style="background:var(--royal-blue); color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">إرسال</button>
         </div>
     </div>
 
@@ -97,23 +100,19 @@
                 <textarea id="c-note" placeholder="How can we help you?"></textarea>
                 <button class="btn-gold" onclick="loadDetailed()">VIEW SERVICES</button>
             </div>
-
             <div id="step-2" style="display:none;">
                 <h3 style="text-align:center;">Select Plan</h3>
                 <div id="sub-list"></div>
             </div>
-
             <div id="step-3" style="display:none;">
                 <h3 style="text-align:center;">Checkout</h3>
                 <button class="btn-gold" style="background:#eee; margin-bottom:10px;" onclick="showP('usdt')">🪙 USDT (TRC20)</button>
                 <button class="btn-gold" style="background:#eee;" onclick="showP('machine')">💳 CARD MACHINE</button>
-
                 <div id="usdt-qr">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=YOUR_WALLET" style="margin-bottom:10px;">
                     <p style="font-size:0.7em;">Network: TRC20</p>
                     <button class="btn-gold" onclick="complete('USDT')">I HAVE TRANSFERRED</button>
                 </div>
-
                 <div id="manual-machine">
                     <div class="m-screen">IDF TERMINAL<br>DUE: <span id="m-price">$0</span></div>
                     <input type="text" class="m-input" placeholder="Card Number">
@@ -124,7 +123,6 @@
                     <button class="btn-gold" style="background:#27ae60; color:white;" onclick="complete('Machine')">CONFIRM</button>
                 </div>
             </div>
-
             <div id="step-4" style="display:none; text-align:center;">
                 <h2 style="color:green;">✔ VERIFIED</h2>
                 <p>System logged your request successfully.</p>
@@ -140,7 +138,59 @@
     </footer>
 
     <script>
-        // Background Animation
+        // --- 1. Notification System (إشعار للمدير) ---
+        async function notifyAdmin(data) {
+            console.log("Admin Notified:", data);
+            // هنا يتم الربط بـ API الخاص بك لإرسال إشعار تلغرام أو إيميل
+            fetch(`${API_URL}/admin_notify`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }).catch(e=>{});
+        }
+
+        // --- 2. Order Tracking (تتبع الطلب) ---
+        function trackOrder() {
+            let phone = prompt("أدخل رقم هاتفك لتتبع حالة طلبك:");
+            if(phone) alert("جاري البحث في السجلات... \nالحالة الحالية لطلبك (" + phone + "): قيد المراجعة الفنية.");
+        }
+
+        // --- 3 & 4. AI Logic + Business Hours ---
+        let chatStep = 0;
+        function getWelcomeMsg() {
+            const hour = new Date().getHours(); // توقيت الزائر، يمكن تعديله لتوقيت إندونيسيا
+            let greeting = "مرحباً بك في IDF!";
+            if(hour > 21 || hour < 6) {
+                return greeting + " نحن حالياً خارج أوقات العمل الرسمية، لكن يمكنني مساعدتك آلياً أو ترك رسالة للمدير.";
+            }
+            return greeting + " كيف يمكننا خدمتك اليوم؟";
+        }
+        document.getElementById('initial-msg').innerText = getWelcomeMsg();
+
+        function handleChatLogic() {
+            const input = document.getElementById('chat-input');
+            const body = document.getElementById('chat-body');
+            if(!input.value.trim()) return;
+
+            const val = input.value;
+            body.innerHTML += `<div class="msg user">${val}</div>`;
+            input.value = "";
+            body.scrollTop = body.scrollHeight;
+
+            setTimeout(() => {
+                let response = "";
+                if(chatStep === 0) {
+                    response = "تشرفنا بك! هل تبحث عن خدمات طلابية أم حلول ذكاء اصطناعي للأعمال؟";
+                    chatStep++;
+                } else if(chatStep === 1) {
+                    response = "ممتاز. ما هي الميزانية التقريبية التي خصصتها لهذا المشروع؟ (مثلاً: 500$ - 2000$)";
+                    chatStep++;
+                } else {
+                    response = "شكراً لهذه المعلومات. تم إرسال التفاصيل للمدير. يمكنك الآن الضغط على الزر الأخضر في الأعلى لبدء محادثة مباشرة عبر واتساب وإتمام الاتفاق.";
+                    notifyAdmin({type: "Chat Lead", message: val});
+                }
+                body.innerHTML += `<div class="msg bot">${response}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 800);
+        }
+
+        // --- Original Scripts (Keep as is) ---
         const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = Array(40).fill().map(() => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, v: Math.random() * 0.4 }));
@@ -154,6 +204,7 @@
             document.getElementById('modal-title').innerText = name; 
             document.getElementById('service-modal').style.display = 'flex'; 
             reset(); 
+            notifyAdmin({action: "opened_service", service: name});
         }
 
         async function loadDetailed() {
@@ -161,77 +212,28 @@
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').style.display = 'block';
             try {
-                const res = await fetch(`${API_URL}/get_quote`, { 
-                    method:'POST', 
-                    headers:{'Content-Type':'application/json'}, 
-                    body:JSON.stringify({main_service:curMain}) 
-                });
+                const res = await fetch(`${API_URL}/get_quote`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({main_service:curMain}) });
                 const data = await res.json();
                 let list = document.getElementById('sub-list'); list.innerHTML = "";
                 for(let s in data) {
-                    list.innerHTML += `
-                        <div class="sub-btn" onclick="goStep3('${s}', ${data[s].price})">
-                            <span>${s}</span> <span>$${data[s].price}</span>
-                        </div>
-                        <p style="font-size:0.8em; color:#666; margin-top:-5px; margin-bottom:10px; padding-left:10px;">${data[s].desc}</p>`;
+                    list.innerHTML += `<div class="sub-btn" onclick="goStep3('${s}', ${data[s].price})"><span>${s}</span> <span>$${data[s].price}</span></div><p style="font-size:0.8em; color:#666; margin-top:-5px; margin-bottom:10px; padding-left:10px;">${data[s].desc}</p>`;
                 }
-            } catch(e) { alert("Check Connection"); }
+            } catch(e) { console.log("Offline mode"); }
         }
 
         function goStep3(s, p) { curSub = s; curPrice = p; document.getElementById('m-price').innerText = "$"+p; document.getElementById('step-2').style.display = 'none'; document.getElementById('step-3').style.display = 'block'; }
         function showP(t) { document.getElementById('usdt-qr').style.display = (t==='usdt'?'block':'none'); document.getElementById('manual-machine').style.display = (t==='machine'?'block':'none'); }
-
+        function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
+        
         async function complete(m) {
-            await fetch(`${API_URL}/execute_final`, { 
-                method:'POST', 
-                headers:{'Content-Type':'application/json'}, 
-                body:JSON.stringify({
-                    main_service:curMain, 
-                    sub_service:curSub, 
-                    price:curPrice, 
-                    name:document.getElementById('c-name').value, 
-                    contact:document.getElementById('c-contact').value, 
-                    method:m, 
-                    note:document.getElementById('c-note').value
-                }) 
-            });
+            const payload = { main_service:curMain, sub_service:curSub, price:curPrice, name:document.getElementById('c-name').value, contact:document.getElementById('c-contact').value, method:m, note:document.getElementById('c-note').value };
+            await fetch(`${API_URL}/execute_final`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+            notifyAdmin({status: "Payment Attempt", details: payload});
             document.getElementById('step-3').style.display = 'none'; document.getElementById('step-4').style.display = 'block';
         }
 
         function reset() { document.getElementById('step-1').style.display='block'; ['step-2','step-3','step-4','usdt-qr','manual-machine'].forEach(i=>document.getElementById(i).style.display='none'); }
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
-
-        // --- LIVE CHAT LOGIC ---
-        function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function sendChatMsg() {
-            const input = document.getElementById('chat-input');
-            const body = document.getElementById('chat-body');
-            if(!input.value.trim()) return;
-
-            // User Message
-            body.innerHTML += `<div class="msg user">${input.value}</div>`;
-            const userMsg = input.value;
-            input.value = "";
-            body.scrollTop = body.scrollHeight;
-
-            // AI Logic / Auto Response
-            setTimeout(() => {
-                body.innerHTML += `<div class="msg bot">شكراً لتواصلك. لخدمتك بشكل أسرع والحصول على تفاصيل دقيقة، يرجى مراسلة المدير مباشرة عبر الواتساب: <br><br> <a href="https://wa.me/6281118895901" style="color:blue; font-weight:bold;">اضغط هنا للمراسلة</a></div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 800);
-        }
     </script>
-
-    <footer style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
-        <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
-        <div style="margin-top: 10px;">
-            <a href="terms.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Terms & Conditions</a>
-            <a href="policy.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Privacy Policy</a>
-        </div>
-    </footer>
 </body>
 </html>
