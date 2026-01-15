@@ -3,78 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PT DANTSU CIPTA ENERGY</title>
+    <title>PT DANTSU | Indonesia Digital Foundation</title>
     <style>
-        /* الحفاظ على ستايلك الأصلي وتصميم البطاقات السوداء */
-        :root { --gold: #c5a059; --royal-blue: #002366; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0a0a0a; color: white; margin: 0; }
-        .header { background: var(--royal-blue); padding: 40px; text-align: center; border-bottom: 3px solid var(--gold); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
-        .card { background: #111; padding: 30px; border-radius: 12px; border: 1px solid #333; text-align: center; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); }
+        :root { --royal-blue: #002366; --gold: #c5a059; --dark-bg: #0a0a0a; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--dark-bg); color: white; }
+        
+        /* Header & Ticker */
+        .header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('energy-bg.jpg'); background-size: cover; padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--gold); }
+        .ticker { background: var(--gold); color: black; padding: 8px; font-weight: bold; }
+
+        /* Services Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 50px 20px; max-width: 1200px; margin: auto; }
+        .card { background: #1a1a1a; padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; transition: 0.3s; cursor: pointer; }
+        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .card i { font-size: 40px; color: var(--gold); margin-bottom: 20px; display: block; }
+        
+        /* AI Chat Window */
+        #ai-window { position: fixed; bottom: 90px; right: 20px; width: 320px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; z-index: 10000; color: #333; overflow: hidden; }
+        .chat-header { background: var(--royal-blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        #ai-messages { height: 300px; overflow-y: auto; padding: 15px; font-size: 14px; background: #f8f9fa; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>PT DANTSU CIPTA ENERGY</h1>
-        <p>Premium Academic & Business Solutions</p>
+        <h1 style="color: var(--gold); margin: 0;">PT DANTSU CIPTA ENERGY</h1>
+        <p>Premium Academic & AI Business Solutions</p>
     </div>
 
-    <div style="background: var(--gold); color: black; padding: 10px; font-weight: bold; text-align: center;">
-        <marquee>NIB: 0603230074983 | Registered Indonesia Digital Foundation | Secure Payments Enabled</marquee>
+    <div class="ticker">
+        <marquee>NIB: 0603230074983 | Registered Indonesia Digital Foundation | Secure Payment Gateway Active 🛡️</marquee>
     </div>
 
     <div class="services-grid">
-        <div class="card">
-            <div style="font-size: 40px; margin-bottom: 15px;">🎓</div>
+        <div class="card" onclick="selectPlan('Student Services')">
+            <i>🎓</i>
             <h3>Student Services</h3>
-            <p>Academic support and AI solutions.</p>
-            <button onclick="alert('Check Termux!')" style="background: var(--gold); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Select Plan</button>
+            <p>Academic support and AI-driven educational solutions.</p>
         </div>
-
-        <div class="card">
-            <div style="font-size: 40px; margin-bottom: 15px;">📊</div>
+        <div class="card" onclick="selectPlan('Excel Systems')">
+            <i>📊</i>
             <h3>Excel Systems</h3>
-            <p>Business automation and reporting.</p>
-            <button onclick="alert('Check Termux!')" style="background: var(--gold); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Select Plan</button>
+            <p>Advanced data management and automated business reporting.</p>
         </div>
-
-        <div class="card">
-            <div style="font-size: 40px; margin-bottom: 15px;">🚢</div>
+        <div class="card" onclick="selectPlan('Energy Export')">
+            <i>🚢</i>
             <h3>Energy Export</h3>
-            <p>Global coal supply chain.</p>
-            <button onclick="alert('Check Termux!')" style="background: var(--gold); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Select Plan</button>
+            <p>Global logistics and coal supply chain management.</p>
         </div>
     </div>
 
-    <div id="ai-chat-bubble" onclick="toggleAIChat()" style="position: fixed; bottom: 20px; right: 20px; background: var(--gold); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; cursor: pointer;">🤖</div>
+    <div id="ai-chat-bubble" onclick="toggleAIChat()" style="position: fixed; bottom: 20px; right: 20px; background: var(--gold); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; cursor: pointer; z-index: 10001; box-shadow: 0 4px 15px rgba(255,215,0,0.3);">
+        🤖
+    </div>
 
-    <div id="ai-window" style="position: fixed; bottom: 90px; right: 20px; width: 300px; background: white; border-radius: 10px; display: none; color: black; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
-        <div style="background: var(--royal-blue); color: white; padding: 10px; border-radius: 10px 10px 0 0;">AI Assistant - PT DANTSU</div>
-        <div id="ai-messages" style="height: 200px; overflow-y: auto; padding: 10px;">Welcome! How can we help you?</div>
-        <div style="padding: 10px; border-top: 1px solid #ddd; display: flex;">
-            <input type="text" id="ai-user-input" style="flex: 1; padding: 5px;" placeholder="Message...">
-            <button onclick="sendAI()" style="background: var(--royal-blue); color: white; border: none; padding: 5px;">Send</button>
+    <div id="ai-window">
+        <div class="chat-header">
+            <span>AI Assistant - PT DANTSU</span>
+        </div>
+        <div id="ai-messages">
+            <div style="background: #e2e8f0; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                Welcome to <strong>PT DANTSU</strong>. How can I assist you with our services today?
+            </div>
+        </div>
+        <div style="padding: 12px; display: flex; background: white; border-top: 1px solid #ddd;">
+            <input type="text" id="ai-user-input" style="flex: 1; padding: 8px;" placeholder="Type message...">
+            <button onclick="sendAI()" style="margin-left: 5px; background: var(--royal-blue); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Send</button>
         </div>
     </div>
 
-    <footer style="background: #000; padding: 30px; text-align: center; border-top: 1px solid var(--gold); margin-top: 40px;">
-        <p>© 2026 PT DANTSU | NIB: 0603230074983</p>
-        <a href="terms.html" style="color: var(--gold); text-decoration: none; margin: 0 10px;">Terms</a>
-        <a href="policy.html" style="color: var(--gold); text-decoration: none; margin: 0 10px;">Privacy Policy</a>
+    <footer style="background: #000; padding: 50px 20px; text-align: center; border-top: 1px solid var(--gold);">
+        <p style="color: var(--gold); font-weight: bold;">PT DANTSU CIPTA ENERGY</p>
+        <p style="font-size: 14px; opacity: 0.8;">Registration NIB: 0603230074983</p>
+        <div style="margin: 25px 0;">
+            <a href="terms.html" style="color: white; text-decoration: none; margin: 0 15px;">Terms & Conditions</a>
+            <a href="policy.html" style="color: white; text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+        </div>
     </footer>
 
     <script>
         function toggleAIChat() {
             const win = document.getElementById('ai-window');
-            win.style.display = (win.style.display === 'none') ? 'block' : 'none';
+            win.style.display = (win.style.display === 'none' || win.style.display === '') ? 'block' : 'none';
         }
+
+        // تم تعديل الرسالة فقط لتكون احترافية للعميل
+        function selectPlan(plan) {
+            alert("Order Confirmed: " + plan + "\nPlease check your WhatsApp/Termux for the secure payment link.");
+        }
+
         function sendAI() {
             const input = document.getElementById('ai-user-input');
-            if (input.value) {
-                document.getElementById('ai-messages').innerHTML += `<div><b>You:</b> ${input.value}</div>`;
-                input.value = '';
+            const msgArea = document.getElementById('ai-messages');
+            if (input.value.trim() !== "") {
+                msgArea.innerHTML += `<div style="text-align: right; margin-bottom: 10px;"><span style="background: var(--royal-blue); color: white; padding: 8px 12px; border-radius: 10px; display: inline-block;">${input.value}</span></div>`;
+                input.value = "";
+                msgArea.scrollTop = msgArea.scrollHeight;
             }
         }
     </script>
