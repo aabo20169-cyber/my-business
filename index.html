@@ -7,49 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --steel-grey: #e2e8f0; --royal-blue: #102a43; --gold: #d4af37; }
-        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; text-align: right; }
+        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; }
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
-        /* Header */
         .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
-        .header h1 span { color: var(--gold); }
         .sub-header-text { margin-top: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.6; }
         
-        /* Ticker */
-        .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; direction: ltr; }
+        .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; }
         .ticker div { display: inline-block; animation: scroll 25s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
-        /* Founders Section */
-        .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; direction: ltr; }
+        .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
         .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; }
         .founder-card span { display: block; font-size: 0.75em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.7); border-radius: 5px; padding: 2px; }
 
-        /* Services Grid */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; direction: rtl; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .card { background: var(--royal-blue); padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
         .card:hover { transform: translateY(-5px); border-color: var(--gold); }
         .card h3 { margin: 10px 0 5px; font-size: 1.1em; color: var(--gold); }
         .card p { font-size: 0.85em; margin: 2px 0; opacity: 0.9; }
         
-        /* Modal System */
         #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; padding: 20px; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; direction: rtl; }
+        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; text-align: center; }
         .modal-desc { font-size: 0.9em; margin-bottom: 15px; line-height: 1.6; color: #555; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .trust-note { font-size: 0.75em; color: #777; margin-top: 10px; text-align: center; }
+        .trust-note { font-size: 0.75em; color: #777; margin-top: 10px; }
         
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo'; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: 'Arial', sans-serif; text-align: left; }
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
-        /* Widgets */
         #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid var(--gold); z-index: 4000; }
         #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 0.8em; border: 1px solid #ddd; z-index: 4000; }
         
-        /* Footer */
         .footer-main { background: var(--royal-blue); padding: 30px; text-align: center; color: white; border-top: 4px solid var(--gold); }
-        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; direction: rtl; }
+        .footer-legal { background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; }
     </style>
 </head>
 <body>
@@ -113,9 +105,9 @@
             <h2 id="modal-title" style="color:var(--royal-blue); margin-bottom:5px;">Request</h2>
             <div id="modal-desc" class="modal-desc"></div>
             
-            <input type="text" id="user-name" placeholder="Full Name / الاسم الكامل">
+            <input type="text" id="user-name" placeholder="Full Name">
             <input type="text" id="user-contact" placeholder="WhatsApp / Email">
-            <textarea id="user-note" rows="4" placeholder="How can we help you? / كيف يمكننا مساعدتك؟"></textarea>
+            <textarea id="user-note" rows="4" placeholder="How can we help you?"></textarea>
             
             <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST / إرسال الطلب</button>
             <p class="trust-note">
@@ -136,7 +128,7 @@
 
     <footer class="footer-legal">
         <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
-        <p style="margin-top:10px; font-size:0.8em; opacity:0.8;">
+        <p style="margin-top:10px; font-size:0.8em; opacity:0.8; max-width: 800px; margin-left: auto; margin-right: auto;">
             جميع الخدمات المقدمة عبر Indonesia Digital Foundation تخضع للأنظمة والقوانين المعمول بها. لا يتم مشاركة أي بيانات مع أطراف خارجية.<br>
             All services provided by Indonesia Digital Foundation comply with applicable regulations. No personal data is shared with third parties.
         </p>
@@ -179,5 +171,4 @@
         draw(); pulseFounders();
     </script>
 </body>
-    </html>
-    
+</html>
