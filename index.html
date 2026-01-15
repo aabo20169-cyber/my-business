@@ -35,6 +35,18 @@
         input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Cairo'; }
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
         .sub-btn { background: #f8fafc; border: 1px solid #ddd; padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
+
+        /* --- STYLES FOR LIVE CHAT --- */
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid var(--gold); z-index: 4000; }
+        #chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 4000; border: 1px solid #ddd; }
+        .chat-header { background: var(--royal-blue); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        #chat-body { height: 300px; overflow-y: auto; padding: 15px; font-size: 0.9em; display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; }
+        .msg { padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+        .msg.bot { background: #e2e8f0; align-self: flex-start; color: #102a43; }
+        .msg.user { background: var(--gold); align-self: flex-end; color: black; }
+        .chat-footer { padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px; }
+        #chat-input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px; outline: none; }
+        .wa-fast-btn { background: #25d366; color: white; text-align: center; padding: 10px; text-decoration: none; font-weight: bold; font-size: 0.8em; display: block; }
     </style>
 </head>
 <body>
@@ -58,6 +70,22 @@
         <div class="card" onclick="openStep1('Online Stores')"><i>🛍️</i><h3>Online Stores</h3></div>
         <div class="card" onclick="openStep1('Fin-Tech')"><i>🏦</i><h3>Fin-Tech</h3></div>
         <div class="card" onclick="openStep1('Legal Support')"><i>⚖️</i><h3>Legal Support</h3></div>
+    </div>
+
+    <div id="chat-trigger" onclick="toggleChat()">💬</div>
+    <div id="chat-window">
+        <div class="chat-header">
+            <span>IDF AI Assistant</span>
+            <span style="cursor:pointer" onclick="toggleChat()">×</span>
+        </div>
+        <a href="https://wa.me/6281118895901" target="_blank" class="wa-fast-btn">Contact WhatsApp Directly ✅</a>
+        <div id="chat-body">
+            <div class="msg bot">مرحباً بك في مؤسسة إندونيسيا الرقمية! كيف يمكنني مساعدتك اليوم؟</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter') sendChatMsg()">
+            <button onclick="sendChatMsg()" style="background:var(--royal-blue); color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">إرسال</button>
+        </div>
     </div>
 
     <div id="service-modal">
@@ -112,13 +140,13 @@
     </footer>
 
     <script>
+        // Background Animation
         const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = Array(40).fill().map(() => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, v: Math.random() * 0.4 }));
         function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#102a43'; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.v; if (p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); } draw();
 
         let curMain = ""; let curSub = ""; let curPrice = 0;
-        // الرابط العالمي الخاص بك
         const API_URL = "https://lauren-jelsoft-penalties-hats.trycloudflare.com";
 
         function openStep1(name) { 
@@ -147,7 +175,7 @@
                         </div>
                         <p style="font-size:0.8em; color:#666; margin-top:-5px; margin-bottom:10px; padding-left:10px;">${data[s].desc}</p>`;
                 }
-            } catch(e) { alert("Check Termux!"); }
+            } catch(e) { alert("Check Connection"); }
         }
 
         function goStep3(s, p) { curSub = s; curPrice = p; document.getElementById('m-price').innerText = "$"+p; document.getElementById('step-2').style.display = 'none'; document.getElementById('step-3').style.display = 'block'; }
@@ -172,14 +200,38 @@
 
         function reset() { document.getElementById('step-1').style.display='block'; ['step-2','step-3','step-4','usdt-qr','manual-machine'].forEach(i=>document.getElementById(i).style.display='none'); }
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
+
+        // --- LIVE CHAT LOGIC ---
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendChatMsg() {
+            const input = document.getElementById('chat-input');
+            const body = document.getElementById('chat-body');
+            if(!input.value.trim()) return;
+
+            // User Message
+            body.innerHTML += `<div class="msg user">${input.value}</div>`;
+            const userMsg = input.value;
+            input.value = "";
+            body.scrollTop = body.scrollHeight;
+
+            // AI Logic / Auto Response
+            setTimeout(() => {
+                body.innerHTML += `<div class="msg bot">شكراً لتواصلك. لخدمتك بشكل أسرع والحصول على تفاصيل دقيقة، يرجى مراسلة المدير مباشرة عبر الواتساب: <br><br> <a href="https://wa.me/6281118895901" style="color:blue; font-weight:bold;">اضغط هنا للمراسلة</a></div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 800);
+        }
     </script>
+
     <footer style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
-    <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
-    <div style="margin-top: 10px;">
-        <a href="terms.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Terms & Conditions</a>
-        <a href="policy.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Privacy Policy</a>
-    </div>
+        <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
+        <div style="margin-top: 10px;">
+            <a href="terms.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Terms & Conditions</a>
+            <a href="policy.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Privacy Policy</a>
+        </div>
     </footer>
-    
 </body>
 </html>
