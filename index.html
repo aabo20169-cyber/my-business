@@ -1,153 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PT DANTSU | Indonesia Digital Foundation</title>
+    <title>IDF | Indonesia Digital Foundation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --royal-blue: #003366; --gold: #c5a059; --dark-bg: #0a0a0a; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--dark-bg); color: white; overflow-x: hidden; }
+        :root { --steel-grey: #e2e8f0; --royal-blue: #102a43; --gold: #d4af37; }
+        body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
-        /* الهيدر الأزرق العريض - التصميم الأول */
-        .header { background: var(--royal-blue); padding: 50px 20px; text-align: center; border-bottom: 3px solid var(--gold); }
-        .header h1 { font-size: 2.2rem; margin: 0; }
-        .header p { color: #ccc; margin-top: 10px; }
-
-        /* الشاشة المتحركة الذهبية */
-        .ticker-wrap { background: var(--gold); color: black; padding: 12px 0; font-weight: bold; }
-
-        /* شبكة الخدمات (6 خانات) */
-        .container { padding: 30px 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: auto; }
-        .card { background: #151515; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); transform: translateY(-5px); }
-        .card i { font-size: 45px; color: var(--gold); margin-bottom: 15px; display: block; }
-        .price { font-size: 1.4rem; color: var(--gold); font-weight: bold; margin: 10px 0; }
+        .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
+        .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.85em; font-weight: bold; overflow: hidden; white-space: nowrap; }
+        .ticker div { display: inline-block; animation: scroll 20s linear infinite; }
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
-        .btn-select { background: var(--gold); color: black; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .intro-box { background: rgba(255, 255, 255, 0.7); margin: 25px auto; padding: 20px; max-width: 850px; border-radius: 10px; border-left: 6px solid var(--royal-blue); color: #102a43; }
+        
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; padding: 20px; max-width: 1000px; margin: 0 auto; }
+        .card { background: var(--royal-blue); padding: 30px; border-radius: 15px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .card i { font-size: 2.5em; display: block; margin-bottom: 15px; color: var(--gold); }
+        
+        #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:3000; justify-content:center; align-items:center; }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 450px; color: #333; max-height: 90vh; overflow-y: auto; }
+        
+        #manual-machine { background: #2c3e50; padding: 20px; border-radius: 15px; color: white; display: none; margin-top: 15px; border: 3px solid #34495e; }
+        .m-screen { background: #95a5a6; color: #1a252f; padding: 15px; border-radius: 5px; font-family: monospace; font-weight: bold; text-align: center; margin-bottom: 15px; font-size: 1.2em; border: 2px inset #7f8c8d; }
+        .m-input { background: #34495e; color: white; border: none; padding: 10px; margin: 5px 0; width: 100%; border-radius: 5px; box-sizing: border-box; }
+        #usdt-qr { display: none; text-align: center; padding: 20px; border: 2px dashed var(--gold); border-radius: 15px; margin-top: 15px; background: #fffdf5; }
 
-        /* نافذة الدفع المتطورة */
-        #payment-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 400px; background: white; color: black; padding: 25px; border-radius: 15px; display: none; z-index: 20000; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        .pay-option { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: bold; }
-        .pay-option:hover { background: #f0f0f0; border-color: var(--royal-blue); }
-
-        /* الدردشة لايف وربط الرقم */
-        #ai-window { position: fixed; bottom: 100px; right: 20px; width: 320px; background: white; border-radius: 15px; display: none; z-index: 10000; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .chat-header { background: var(--royal-blue); color: white; padding: 15px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; }
+        .footer { background: var(--royal-blue); padding: 40px; text-align: center; color: #a0aec0; border-top: 4px solid var(--gold); margin-top: 30px; }
+        
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Cairo'; }
+        .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
+        .sub-btn { background: #f8fafc; border: 1px solid #ddd; padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
     </style>
 </head>
 <body>
-
+    <canvas id="bg-canvas"></canvas>
+    
     <div class="header">
-        <h1>PT DANTSU CIPTA ENERGY</h1>
+        <h1>INDONESIA DIGITAL <span>FOUNDATION</span> ⚜️</h1>
         <p>Premium Academic & AI Business Solutions</p>
     </div>
 
-    <div class="ticker-wrap">
-        <marquee scrollamount="6">NIB: 0603230074983 | Indonesia Digital Foundation | Secure QRIS & Bank Transfer Enabled | 2026 Admissions Open</marquee>
+    <div class="ticker"><div> ⚡ AI SOLUTIONS ACTIVE | 🎓 2026 ADMISSIONS OPEN | 🛡️ SECURE GATEWAY </div></div>
+
+    <div class="intro-box">
+        <p><strong>IDF Global:</strong> Leading the digital transformation with high-end AI integration and international support.</p>
     </div>
 
-    <section style="padding: 30px 20px; text-align: center; max-width: 800px; margin: auto;">
-        <h2 style="color: var(--gold);">About PT DANTSU</h2>
-        <p style="color: #aaa; line-height: 1.6;">Leading digital transformation with high-end AI integration and global energy logistics. Licensed by Indonesian Digital Foundation.</p>
-    </section>
-
-    <div class="container">
-        <div class="card">
-            <i>🎓</i>
-            <h3>Student Services</h3>
-            <p>Academic support and AI research tools.</p>
-            <div class="price">1,500,000 IDR</div>
-            <button class="btn-select" onclick="openPayment('Student Services', '1,500,000')">Select Plan</button>
-        </div>
-
-        <div class="card">
-            <i>📊</i>
-            <h3>Excel Systems</h3>
-            <p>Automated business reporting and modeling.</p>
-            <div class="price">2,000,000 IDR</div>
-            <button class="btn-select" onclick="openPayment('Excel Systems', '2,000,000')">Select Plan</button>
-        </div>
-
-        <div class="card">
-            <i>🚢</i>
-            <h3>Energy Export</h3>
-            <p>International coal trade and logistics.</p>
-            <div class="price">Negotiable</div>
-            <button class="btn-select" onclick="openPayment('Energy Export', 'Negotiable')">Get Quote</button>
-        </div>
-
-        <div class="card">
-            <i>💻</i>
-            <h3>IT Solutions</h3>
-            <p>Enterprise infrastructure and cloud hosting.</p>
-            <div class="price">3,500,000 IDR</div>
-            <button class="btn-select" onclick="openPayment('IT Solutions', '3,500,000')">Select Plan</button>
-        </div>
-
-        <div class="card">
-            <i>🛡️</i>
-            <h3>NIB Consulting</h3>
-            <p>Legal business registration and licensing.</p>
-            <div class="price">5,000,000 IDR</div>
-            <button class="btn-select" onclick="openPayment('NIB Consulting', '5,000,000')">Select Plan</button>
-        </div>
-
-        <div class="card">
-            <i>📈</i>
-            <h3>Marketing AI</h3>
-            <p>Growth hacking and smart sales tools.</p>
-            <div class="price">2,500,000 IDR</div>
-            <button class="btn-select" onclick="openPayment('Marketing AI', '2,500,000')">Select Plan</button>
-        </div>
+    <div class="services-grid">
+        <div class="card" onclick="openStep1('Student Services')"><i>🎓</i><h3>Student Services</h3></div>
+        <div class="card" onclick="openStep1('Excel Systems')"><i>📊</i><h3>Excel Systems</h3></div>
+        <div class="card" onclick="openStep1('AI Solutions')"><i>🤖</i><h3>AI Solutions</h3></div>
+        <div class="card" onclick="openStep1('Online Stores')"><i>🛍️</i><h3>Online Stores</h3></div>
+        <div class="card" onclick="openStep1('Fin-Tech')"><i>🏦</i><h3>Fin-Tech</h3></div>
+        <div class="card" onclick="openStep1('Legal Support')"><i>⚖️</i><h3>Legal Support</h3></div>
     </div>
 
-    <div id="payment-modal">
-        <h3 id="pay-title">Payment Method</h3>
-        <p id="pay-amount"></p>
-        <div class="pay-option" onclick="processPay('QRIS / QR Code')">🖼️ QRIS / QR Code</div>
-        <div class="pay-option" onclick="processPay('Bank Transfer')">🏦 Bank Transfer</div>
-        <div class="pay-option" onclick="processPay('Manual Entry')">💳 Manual Entry (POS Machine)</div>
-        <button onclick="closePayment()" style="width:100%; padding:10px; margin-top:10px; background:#eee; border:none; border-radius:5px;">Cancel</button>
-    </div>
+    <div id="service-modal">
+        <div class="modal-content">
+            <div id="step-1">
+                <h2 id="modal-title" style="color:var(--royal-blue);">Request</h2>
+                <input type="text" id="c-name" placeholder="Full Name">
+                <input type="text" id="c-contact" placeholder="Contact Details">
+                <textarea id="c-note" placeholder="How can we help you?"></textarea>
+                <button class="btn-gold" onclick="loadDetailed()">VIEW SERVICES</button>
+            </div>
 
-    <div id="ai-chat-bubble" onclick="toggleAIChat()" style="position: fixed; bottom: 25px; right: 25px; background: var(--gold); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; cursor: pointer; z-index: 10001;">🤖</div>
+            <div id="step-2" style="display:none;">
+                <h3 style="text-align:center;">Select Plan</h3>
+                <div id="sub-list"></div>
+            </div>
 
-    <div id="ai-window">
-        <div class="chat-header">
-            <span>PT DANTSU Support</span>
-            <span onclick="toggleAIChat()" style="cursor: pointer;">&times;</span>
-        </div>
-        <div id="ai-messages" style="padding: 15px; text-align: center;">
-            <p>How can we help you today?</p>
-            <a href="https://wa.me/6281118895901" style="display: block; background: #25d366; color: white; padding: 12px; border-radius: 5px; text-decoration: none; font-weight: bold;">Chat on WhatsApp +62 8111 8895901</a>
+            <div id="step-3" style="display:none;">
+                <h3 style="text-align:center;">Checkout</h3>
+                <button class="btn-gold" style="background:#eee; margin-bottom:10px;" onclick="showP('usdt')">🪙 USDT (TRC20)</button>
+                <button class="btn-gold" style="background:#eee;" onclick="showP('machine')">💳 CARD MACHINE</button>
+
+                <div id="usdt-qr">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=YOUR_WALLET" style="margin-bottom:10px;">
+                    <p style="font-size:0.7em;">Network: TRC20</p>
+                    <button class="btn-gold" onclick="complete('USDT')">I HAVE TRANSFERRED</button>
+                </div>
+
+                <div id="manual-machine">
+                    <div class="m-screen">IDF TERMINAL<br>DUE: <span id="m-price">$0</span></div>
+                    <input type="text" class="m-input" placeholder="Card Number">
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" class="m-input" placeholder="MM/YY">
+                        <input type="text" class="m-input" placeholder="CVV">
+                    </div>
+                    <button class="btn-gold" style="background:#27ae60; color:white;" onclick="complete('Machine')">CONFIRM</button>
+                </div>
+            </div>
+
+            <div id="step-4" style="display:none; text-align:center;">
+                <h2 style="color:green;">✔ VERIFIED</h2>
+                <p>System logged your request successfully.</p>
+            </div>
+            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:20px; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
-    <footer style="background: #000; padding: 40px 20px; text-align: center; border-top: 1px solid var(--gold);">
-        <p style="color: var(--gold); font-weight: bold;">PT DANTSU CIPTA ENERGY</p>
-        <p style="font-size: 13px; color: #666;">NIB: 0603230074983 | © 2026 Indonesia Digital Foundation</p>
-        <div style="margin-top: 15px;">
-            <a href="policy.html" style="color: white; margin: 0 10px; text-decoration: none; font-size: 12px;">Privacy Policy</a>
-            <a href="terms.html" style="color: white; margin: 0 10px; text-decoration: none; font-size: 12px;">Terms of Service</a>
-        </div>
+    <footer class="footer">
+        <h3 style="color:white;">INDONESIA DIGITAL <span>FOUNDATION</span></h3>
+        <p>Jakarta • London • Dubai</p>
+        <p style="margin-top:20px; font-size:0.8em; opacity:0.6;">© 2026 IDF Global Operations. All Rights Reserved.</p>
     </footer>
 
     <script>
-        function toggleAIChat() {
-            const win = document.getElementById('ai-window');
-            win.style.display = (win.style.display === 'none' || win.style.display === '') ? 'block' : 'none';
+        const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = Array(40).fill().map(() => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, v: Math.random() * 0.4 }));
+        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#102a43'; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.v; if (p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); } draw();
+
+        let curMain = ""; let curSub = ""; let curPrice = 0;
+        // الرابط العالمي الخاص بك
+        const API_URL = "https://lauren-jelsoft-penalties-hats.trycloudflare.com";
+
+        function openStep1(name) { 
+            curMain = name; 
+            document.getElementById('modal-title').innerText = name; 
+            document.getElementById('service-modal').style.display = 'flex'; 
+            reset(); 
         }
-        function openPayment(service, price) {
-            document.getElementById('pay-title').innerText = "Paying for: " + service;
-            document.getElementById('pay-amount').innerText = "Price: " + price + " IDR";
-            document.getElementById('payment-modal').style.display = 'block';
+
+        async function loadDetailed() {
+            if(!document.getElementById('c-name').value) return alert("Enter Name");
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            try {
+                const res = await fetch(`${API_URL}/get_quote`, { 
+                    method:'POST', 
+                    headers:{'Content-Type':'application/json'}, 
+                    body:JSON.stringify({main_service:curMain}) 
+                });
+                const data = await res.json();
+                let list = document.getElementById('sub-list'); list.innerHTML = "";
+                for(let s in data) {
+                    list.innerHTML += `
+                        <div class="sub-btn" onclick="goStep3('${s}', ${data[s].price})">
+                            <span>${s}</span> <span>$${data[s].price}</span>
+                        </div>
+                        <p style="font-size:0.8em; color:#666; margin-top:-5px; margin-bottom:10px; padding-left:10px;">${data[s].desc}</p>`;
+                }
+            } catch(e) { alert("Check Termux!"); }
         }
-        function closePayment() {
-            document.getElementById('payment-modal').style.display = 'none';
+
+        function goStep3(s, p) { curSub = s; curPrice = p; document.getElementById('m-price').innerText = "$"+p; document.getElementById('step-2').style.display = 'none'; document.getElementById('step-3').style.display = 'block'; }
+        function showP(t) { document.getElementById('usdt-qr').style.display = (t==='usdt'?'block':'none'); document.getElementById('manual-machine').style.display = (t==='machine'?'block':'none'); }
+
+        async function complete(m) {
+            await fetch(`${API_URL}/execute_final`, { 
+                method:'POST', 
+                headers:{'Content-Type':'application/json'}, 
+                body:JSON.stringify({
+                    main_service:curMain, 
+                    sub_service:curSub, 
+                    price:curPrice, 
+                    name:document.getElementById('c-name').value, 
+                    contact:document.getElementById('c-contact').value, 
+                    method:m, 
+                    note:document.getElementById('c-note').value
+                }) 
+            });
+            document.getElementById('step-3').style.display = 'none'; document.getElementById('step-4').style.display = 'block';
         }
-        function processPay(method) {
-            alert("Method: " + method + "\n\nInitializing secure link...\nCheck Termux!");
-        }
+
+        function reset() { document.getElementById('step-1').style.display='block'; ['step-2','step-3','step-4','usdt-qr','manual-machine'].forEach(i=>document.getElementById(i).style.display='none'); }
+        function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
     </script>
 </body>
 </html>
