@@ -10,45 +10,40 @@
         body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; text-align: center; }
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
-        /* Header & Banner */
         .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
         .sub-header-text { margin-top: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.6; }
         
-        /* News Ticker */
         .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; }
         .ticker div { display: inline-block; animation: scroll 25s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
-        /* Founder Pulse */
         .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
         .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; }
         .founder-card span { display: block; font-size: 0.75em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.7); border-radius: 5px; padding: 2px; }
 
-        /* Services Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .card { background: var(--royal-blue); padding: 20px; border-radius: 12px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
         .card:hover { transform: translateY(-5px); border-color: var(--gold); }
         .card h3 { margin: 10px 0 5px; font-size: 1.1em; color: var(--gold); }
         .card p { font-size: 0.85em; margin: 2px 0; opacity: 0.9; }
         
-        /* Request Modal */
         #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; padding: 20px; }
         .modal-content { background: white; padding: 25px; border-radius: 15px; width: 100%; max-width: 500px; color: #333; }
         .modal-desc { font-size: 0.9em; margin-bottom: 15px; line-height: 1.6; color: #555; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .trust-note { font-size: 0.75em; color: #777; margin-top: 10px; }
         
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; font-family: sans-serif; text-align: left; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; text-align: left; }
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
-        /* Navigation Buttons */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; border: 2px solid var(--gold); z-index: 4000; }
-        #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 0.8em; border: 1px solid #ddd; z-index: 4000; }
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 4000; border: 2px solid var(--gold); cursor: pointer;}
+        #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8em; border: 1px solid #ddd; z-index: 4000; cursor: pointer;}
         
-        /* Corporate Footers */
         .footer-main { background: var(--royal-blue); padding: 30px; text-align: center; color: white; border-top: 4px solid var(--gold); margin-top: 30px; }
-        .footer-legal { background: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; line-height: 1.6; }
+        .footer-legal { background: #f8f9fa; padding: 25px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; }
+        .footer-links { margin-top: 15px; }
+        .footer-links a { color: #007bff; text-decoration: none; margin: 0 10px; font-weight: bold; }
+        .footer-links a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -56,12 +51,10 @@
     
     <div class="header">
         <h1>INDONESIA DIGITAL <span>FOUNDATION</span> ⚜️</h1>
-        <div class="sub-header-text">
-            Advanced digital solutions powered by AI and institutional expertise
-        </div>
+        <div class="sub-header-text">Advanced digital solutions powered by AI and institutional expertise</div>
     </div>
 
-    <div class="ticker"><div> ⚡ AI SOLUTIONS ACTIVE | 🎓 2026 ADMISSIONS OPEN | 🛡️ SECURE DATA GATEWAY | 💼 PROFESSIONAL CONSULTANCY </div></div>
+    <div class="ticker"><div> ⚡ AI SOLUTIONS ACTIVE | 🎓 2026 ADMISSIONS OPEN | 🛡️ SECURE DATA GATEWAY </div></div>
 
     <div class="founders-section">
         <div class="founder-card" id="founder1"><img src="director.jpg" alt="Director"><span>DIRECTOR</span></div>
@@ -69,62 +62,29 @@
     </div>
 
     <div class="services-grid">
-        <div class="card" onclick="openStep1('Student Services')">
-            <h3>🎓 Student Services</h3>
-            <p>Academic & Admission Support</p>
-            <p style="font-size:0.7em; opacity:0.7;">From Application to Acceptance</p>
-        </div>
-        <div class="card" onclick="openStep1('AI Solutions')">
-            <h3>🤖 AI Solutions</h3>
-            <p>Advanced AI Solutions</p>
-            <p style="font-size:0.7em; opacity:0.7;">Smart AI for Business Growth</p>
-        </div>
-        <div class="card" onclick="openStep1('Excel Systems')">
-            <h3>📊 Excel Systems</h3>
-            <p>Excel Automation & Dashboards</p>
-            <p style="font-size:0.7em; opacity:0.7;">Smart Automation Systems</p>
-        </div>
-        <div class="card" onclick="openStep1('Online Stores')">
-            <h3>🛍️ Online Stores</h3>
-            <p>Professional Online Stores</p>
-            <p style="font-size:0.7em; opacity:0.7;">Launch Your eCommerce</p>
-        </div>
-        <div class="card" onclick="openStep1('Fin-Tech')">
-            <h3>🏦 Fin-Tech</h3>
-            <p>Fin-Tech & Payment Solutions</p>
-            <p style="font-size:0.7em; opacity:0.7;">Digital Financial Systems</p>
-        </div>
-        <div class="card" onclick="openStep1('Legal Support')">
-            <h3>⚖️ Legal Support</h3>
-            <p>Corporate Legal Services</p>
-            <p style="font-size:0.7em; opacity:0.7;">Business Legal Protection</p>
-        </div>
-        <div class="card" onclick="openStep1('AI Business Booster')" style="border: 2px solid var(--gold);">
-            <h3>🚀 AI Business Booster</h3>
-            <p>Executive AI Growth Plan</p>
-            <p style="font-size:0.7em; opacity:0.7;">Premium Growth Program</p>
-        </div>
+        <div class="card" onclick="openStep1('Student Services')"><h3>🎓 Student Services</h3><p>Academic & Admission Support</p></div>
+        <div class="card" onclick="openStep1('AI Solutions')"><h3>🤖 AI Solutions</h3><p>Advanced AI Solutions</p></div>
+        <div class="card" onclick="openStep1('Excel Systems')"><h3>📊 Excel Systems</h3><p>Excel Automation & Dashboards</p></div>
+        <div class="card" onclick="openStep1('Online Stores')"><h3>🛍️ Online Stores</h3><p>Professional Online Stores</p></div>
+        <div class="card" onclick="openStep1('Fin-Tech')"><h3>🏦 Fin-Tech</h3><p>Fin-Tech & Payment Solutions</p></div>
+        <div class="card" onclick="openStep1('Legal Support')"><h3>⚖️ Legal Support</h3><p>Corporate Legal Services</p></div>
+        <div class="card" onclick="openStep1('AI Business Booster')" style="border: 2px solid var(--gold);"><h3>🚀 AI Business Booster</h3><p>Executive AI Growth Plan</p></div>
     </div>
 
     <div id="service-modal">
         <div class="modal-content">
-            <h2 id="modal-title" style="color:var(--royal-blue); margin-bottom:5px;">Request</h2>
+            <h2 id="modal-title">Request</h2>
             <div id="modal-desc" class="modal-desc"></div>
-            
-            <input type="text" id="user-name" placeholder="Full Name">
-            <input type="text" id="user-contact" placeholder="WhatsApp / Email">
-            <textarea id="user-note" rows="4" placeholder="How can we help you?"></textarea>
-            
+            <input type="text" placeholder="Full Name">
+            <input type="text" placeholder="Contact Details">
+            <textarea rows="4" placeholder="How can we help you?"></textarea>
             <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST</button>
-            <p class="trust-note">
-                All requests are handled confidentially and reviewed by AI and management systems.
-            </p>
-            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer; font-weight:bold;">CLOSE</button>
+            <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:10px; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
     <div id="track-trigger" onclick="alert('Order Status: Under Administrative Review.')">🔍 Track Order</div>
-    <div id="chat-trigger" onclick="alert('AI Assistant is ready to support you.')">💬</div>
+    <div id="chat-trigger" onclick="alert('AI Assistant is ready.')">💬</div>
 
     <footer class="footer-main">
         <h3>INDONESIA DIGITAL FOUNDATION</h3>
@@ -133,21 +93,26 @@
 
     <footer class="footer-legal">
         <p><strong>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</strong></p>
-        <p style="margin-top:10px; font-size:0.85em; opacity:0.9; max-width: 800px; margin-left: auto; margin-right: auto;">
-            All services provided via Indonesia Digital Foundation are subject to applicable laws and regulations. 
-            Personal data is handled with strict confidentiality and is never shared with third parties.
+        <p style="margin-top:10px; opacity:0.8; max-width: 700px; margin: 10px auto;">
+            All services provided by Indonesia Digital Foundation comply with international standards. 
+            Data protection is our priority.
         </p>
+        <div class="footer-links">
+            <a href="terms.html">Terms & Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="about.html">Corporate Info</a>
+        </div>
     </footer>
 
     <script>
         const modalData = {
-            'Student Services': "Please provide your academic details for review by our admission specialists.",
-            'AI Solutions': "Describe your project to receive a customized AI solution proposal.",
-            'Excel Systems': "Share your workflow and we’ll build a smart Excel-based system for you.",
-            'Online Stores': "Tell us about your store and we’ll handle setup and launch.",
-            'Fin-Tech': "Provide your financial requirements for a secure digital solution.",
-            'Legal Support': "Describe your legal needs and our team will contact you confidentially.",
-            'AI Business Booster': "Executive-level program – reviewed directly by senior management."
+            'Student Services': "Please provide your academic details for review.",
+            'AI Solutions': "Describe your project for a customized AI proposal.",
+            'Excel Systems': "Share your workflow and we'll build your system.",
+            'Online Stores': "Tell us about your store requirements.",
+            'Fin-Tech': "Provide your financial system requirements.",
+            'Legal Support': "Describe your legal needs confidentially.",
+            'AI Business Booster': "Executive program – reviewed directly by senior management."
         };
 
         function openStep1(name) {
@@ -155,14 +120,8 @@
             document.getElementById('modal-desc').innerText = modalData[name] || "";
             document.getElementById('service-modal').style.display = 'flex';
         }
-
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
-
-        function submitOrder() {
-            alert("Your request has been received.\nIt is currently under AI & management review.");
-            closeModal();
-        }
-
+        function submitOrder() { alert("Request received. Under AI & Management review."); closeModal(); }
         function pulseFounders() {
             const f1 = document.getElementById('founder1'); const f2 = document.getElementById('founder2');
             if(f1 && f2) { f1.classList.add('show'); f2.classList.add('show'); setTimeout(() => { f1.classList.remove('show'); f2.classList.remove('show'); }, 5000); }
