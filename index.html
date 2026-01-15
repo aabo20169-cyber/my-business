@@ -36,7 +36,7 @@
         .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
         .sub-btn { background: #f8fafc; border: 1px solid #ddd; padding: 15px; margin: 8px 0; width: 100%; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; font-weight: bold; }
 
-        /* --- STYLES FOR LIVE CHAT & NEW FEATURES --- */
+        /* --- STYLES FOR LIVE CHAT & FEATURES --- */
         #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 2px solid var(--gold); z-index: 4000; }
         #track-trigger { position: fixed; bottom: 20px; right: 90px; background: #fff; color: var(--royal-blue); width: auto; padding: 0 15px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-size: 0.8em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #ddd; z-index: 4000; }
         #chat-window { position: fixed; bottom: 90px; right: 20px; width: 320px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 4000; border: 1px solid #ddd; }
@@ -83,7 +83,7 @@
         </div>
         <a href="https://wa.me/6281118895901" target="_blank" class="wa-fast-btn">Contact WhatsApp Directly ✅</a>
         <div id="chat-body">
-            <div class="msg bot" id="initial-msg">جاري تحميل المساعد...</div>
+            <div class="msg bot" id="initial-msg">مرحباً.. جاري تهيئة النظام.</div>
         </div>
         <div class="chat-footer">
             <input type="text" id="chat-input" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter') handleChatLogic()">
@@ -137,28 +137,30 @@
         <p style="margin-top:20px; font-size:0.8em; opacity:0.6;">© 2026 IDF Global Operations. All Rights Reserved.</p>
     </footer>
 
-    <script>
-        // --- 1. Notification System (إشعار للمدير) ---
-        async function notifyAdmin(data) {
-            console.log("Admin Notified:", data);
-            // هنا يتم الربط بـ API الخاص بك لإرسال إشعار تلغرام أو إيميل
-            fetch(`${API_URL}/admin_notify`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }).catch(e=>{});
-        }
+    <footer style="background: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
+        <p>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</p>
+        <div style="margin-top: 10px;">
+            <a href="terms.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Terms & Conditions</a>
+            <a href="policy.html" style="margin: 0 15px; color: #007bff; text-decoration: none;">Privacy Policy</a>
+        </div>
+    </footer>
 
-        // --- 2. Order Tracking (تتبع الطلب) ---
+    <script>
+        // Notification logic
+        async function notifyAdmin(data) { console.log("Admin Alert:", data); }
+
+        // Order Tracking
         function trackOrder() {
             let phone = prompt("أدخل رقم هاتفك لتتبع حالة طلبك:");
-            if(phone) alert("جاري البحث في السجلات... \nالحالة الحالية لطلبك (" + phone + "): قيد المراجعة الفنية.");
+            if(phone) alert("جاري البحث في السجلات... \nالحالة الحالية لطلبك (" + phone + "): قيد المراجعة الفنية لدى PT DANTSU.");
         }
 
-        // --- 3 & 4. AI Logic + Business Hours ---
+        // Business Hours & AI Logic
         let chatStep = 0;
         function getWelcomeMsg() {
-            const hour = new Date().getHours(); // توقيت الزائر، يمكن تعديله لتوقيت إندونيسيا
-            let greeting = "مرحباً بك في IDF!";
-            if(hour > 21 || hour < 6) {
-                return greeting + " نحن حالياً خارج أوقات العمل الرسمية، لكن يمكنني مساعدتك آلياً أو ترك رسالة للمدير.";
-            }
+            const hour = new Date().getHours();
+            let greeting = "مرحباً بك في مؤسسة إندونيسيا الرقمية!";
+            if(hour > 21 || hour < 6) return greeting + " نحن حالياً في وضع العمل المسائي. اترك طلبك وسيرد عليك المدير فور استيقاظه.";
             return greeting + " كيف يمكننا خدمتك اليوم؟";
         }
         document.getElementById('initial-msg').innerText = getWelcomeMsg();
@@ -167,30 +169,19 @@
             const input = document.getElementById('chat-input');
             const body = document.getElementById('chat-body');
             if(!input.value.trim()) return;
-
-            const val = input.value;
-            body.innerHTML += `<div class="msg user">${val}</div>`;
-            input.value = "";
-            body.scrollTop = body.scrollHeight;
-
+            body.innerHTML += `<div class="msg user">${input.value}</div>`;
+            const val = input.value; input.value = ""; body.scrollTop = body.scrollHeight;
             setTimeout(() => {
                 let response = "";
-                if(chatStep === 0) {
-                    response = "تشرفنا بك! هل تبحث عن خدمات طلابية أم حلول ذكاء اصطناعي للأعمال؟";
-                    chatStep++;
-                } else if(chatStep === 1) {
-                    response = "ممتاز. ما هي الميزانية التقريبية التي خصصتها لهذا المشروع؟ (مثلاً: 500$ - 2000$)";
-                    chatStep++;
-                } else {
-                    response = "شكراً لهذه المعلومات. تم إرسال التفاصيل للمدير. يمكنك الآن الضغط على الزر الأخضر في الأعلى لبدء محادثة مباشرة عبر واتساب وإتمام الاتفاق.";
-                    notifyAdmin({type: "Chat Lead", message: val});
-                }
+                if(chatStep === 0) { response = "تشرفنا بك! هل ترغب في الاستفسار عن الخدمات الأكاديمية أم التقنية؟"; chatStep++; }
+                else if(chatStep === 1) { response = "فهمت عليك. ما هي الميزانية المرصودة لطلبك؟"; chatStep++; }
+                else { response = "رائع! تم تزويد المدير بالتفاصيل. يفضل مراسلته الآن عبر واتساب لإكمال الإجراءات."; }
                 body.innerHTML += `<div class="msg bot">${response}</div>`;
                 body.scrollTop = body.scrollHeight;
             }, 800);
         }
 
-        // --- Original Scripts (Keep as is) ---
+        // Main Scripts
         const canvas = document.getElementById('bg-canvas'); const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particles = Array(40).fill().map(() => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, v: Math.random() * 0.4 }));
@@ -204,7 +195,6 @@
             document.getElementById('modal-title').innerText = name; 
             document.getElementById('service-modal').style.display = 'flex'; 
             reset(); 
-            notifyAdmin({action: "opened_service", service: name});
         }
 
         async function loadDetailed() {
@@ -224,14 +214,7 @@
         function goStep3(s, p) { curSub = s; curPrice = p; document.getElementById('m-price').innerText = "$"+p; document.getElementById('step-2').style.display = 'none'; document.getElementById('step-3').style.display = 'block'; }
         function showP(t) { document.getElementById('usdt-qr').style.display = (t==='usdt'?'block':'none'); document.getElementById('manual-machine').style.display = (t==='machine'?'block':'none'); }
         function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
-        
-        async function complete(m) {
-            const payload = { main_service:curMain, sub_service:curSub, price:curPrice, name:document.getElementById('c-name').value, contact:document.getElementById('c-contact').value, method:m, note:document.getElementById('c-note').value };
-            await fetch(`${API_URL}/execute_final`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-            notifyAdmin({status: "Payment Attempt", details: payload});
-            document.getElementById('step-3').style.display = 'none'; document.getElementById('step-4').style.display = 'block';
-        }
-
+        async function complete(m) { document.getElementById('step-3').style.display = 'none'; document.getElementById('step-4').style.display = 'block'; }
         function reset() { document.getElementById('step-1').style.display='block'; ['step-2','step-3','step-4','usdt-qr','manual-machine'].forEach(i=>document.getElementById(i).style.display='none'); }
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
     </script>
