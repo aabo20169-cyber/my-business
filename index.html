@@ -10,51 +10,33 @@
         body { font-family: 'Cairo', sans-serif; background: var(--steel-grey); margin: 0; padding: 0; overflow-x: hidden; text-align: center; }
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
         
-        /* Header & Banner */
         .header { background: var(--royal-blue); padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold); color: white; }
         .sub-header-text { margin-top: 10px; font-size: 0.9em; opacity: 0.9; line-height: 1.6; }
         
-        /* News Ticker */
         .ticker { background: var(--gold); color: black; padding: 10px 0; font-size: 0.8em; font-weight: bold; overflow: hidden; white-space: nowrap; }
         .ticker div { display: inline-block; animation: scroll 25s linear infinite; }
         @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
         
-        /* Founders Pulse */
         .founders-section { display: flex; justify-content: center; gap: 30px; margin-top: 15px; height: 110px; }
         .founder-card { text-align: center; transition: opacity 1.5s ease-in-out; opacity: 0; visibility: hidden; }
         .founder-card.show { opacity: 1; visibility: visible; }
         .founder-card img { width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; background: #fff; }
         .founder-card span { display: block; font-size: 0.7em; font-weight: bold; color: var(--royal-blue); margin-top: 5px; background: rgba(255,255,255,0.8); border-radius: 5px; padding: 2px 5px; }
 
-        /* Services Grid */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; padding: 20px; max-width: 1200px; margin: 0 auto; }
         .card { background: var(--royal-blue); padding: 25px; border-radius: 15px; text-align: center; transition: 0.3s; cursor: pointer; color: white; border: 1px solid rgba(255,255,255,0.1); }
-        .card:hover { transform: translateY(-5px); border-color: var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .card h3 { margin: 10px 0 5px; font-size: 1.1em; color: var(--gold); }
-        .card p { font-size: 0.85em; margin: 2px 0; opacity: 0.9; }
+        .card:hover { transform: translateY(-5px); border-color: var(--gold); }
 
-        /* Request Modal */
         #service-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:5000; justify-content:center; align-items:center; padding: 20px; }
         .modal-content { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; color: #333; position: relative; }
-        .modal-desc { font-size: 0.9em; margin-bottom: 20px; line-height: 1.6; color: #444; border-bottom: 1px solid #eee; padding-bottom: 15px; }
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: sans-serif; }
-        .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; font-size: 1em; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+        .btn-gold { background: var(--gold); color: black; font-weight: bold; width: 100%; padding: 15px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
-        /* Chat Window */
-        #chat-window { position: fixed; bottom: 95px; right: 20px; width: 320px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: none; flex-direction: column; overflow: hidden; z-index: 4000; border: 1px solid #ccc; text-align: left; }
-        .chat-header { background: var(--royal-blue); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
-        #chat-body { height: 250px; overflow-y: auto; padding: 15px; font-size: 0.9em; background: #fdfdfd; }
-        .chat-input-area { display: flex; border-top: 1px solid #eee; padding: 5px; }
-        .chat-input-area input { border: none; padding: 10px; flex: 1; outline: none; margin: 0; }
-        .chat-input-area button { background: var(--gold); border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; }
-        
-        /* Floating Widgets */
-        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: var(--royal-blue); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 4000; border: 2px solid var(--gold); cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        #track-trigger { position: fixed; bottom: 20px; right: 95px; background: #fff; color: var(--royal-blue); padding: 0 20px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85em; border: 1px solid #ddd; z-index: 4000; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        #track-trigger { position: fixed; bottom: 20px; right: 95px; background: #fff; color: var(--royal-blue); padding: 0 20px; height: 45px; border-radius: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85em; border: 1px solid #ddd; z-index: 4000; cursor: pointer; }
+        #chat-trigger { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 4000; border: 2px solid white; cursor: pointer; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
-        /* Footers */
         .footer-main { background: var(--royal-blue); padding: 40px; text-align: center; color: white; border-top: 4px solid var(--gold); margin-top: 40px; }
-        .footer-legal { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; line-height: 1.8; }
+        .footer-legal { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #ddd; font-size: 0.85em; color: #333; }
         .footer-links { margin-top: 15px; }
         .footer-links a { color: #007bff; text-decoration: none; margin: 0 12px; font-weight: bold; }
     </style>
@@ -84,30 +66,22 @@
         <div class="card" onclick="openModal('AI Business Booster')" style="border: 2px solid var(--gold);"><h3>🚀 AI Business Booster</h3><p>Executive AI Growth Plan</p></div>
     </div>
 
-    <div id="chat-window">
-        <div class="chat-header"><span>IDF AI Assistant</span><span style="cursor:pointer" onclick="toggleChat()">×</span></div>
-        <div id="chat-body">Hello! How can we assist you today?</div>
-        <div class="chat-input-area">
-            <input type="text" id="chat-msg" placeholder="Type message...">
-            <button onclick="sendChat()">Send</button>
-        </div>
-    </div>
-
     <div id="service-modal">
         <div class="modal-content">
             <h2 id="modal-title">Request</h2>
-            <div id="modal-desc" class="modal-desc"></div>
+            <div id="modal-desc" style="font-size: 0.9em; margin-bottom: 20px; line-height: 1.6; color: #444;"></div>
             <input type="text" placeholder="Full Name">
-            <input type="text" placeholder="Contact Details (WhatsApp/Email)">
+            <input type="text" placeholder="Contact Details">
             <textarea rows="4" placeholder="Describe your requirements..."></textarea>
             <button class="btn-gold" onclick="submitOrder()">SUBMIT REQUEST</button>
-            <p style="font-size:0.7em; color:#888; margin-top:10px;">Your data is protected by PT DANTSU security protocols.</p>
             <button onclick="closeModal()" style="background:none; border:none; color:red; width:100%; margin-top:15px; cursor:pointer; font-weight:bold;">CLOSE</button>
         </div>
     </div>
 
-    <div id="track-trigger" onclick="alert('Order Status: Under Administrative Review.\nReference: PT-DANTSU-2026')">🔍 Track Order</div>
-    <div id="chat-trigger" onclick="toggleChat()">💬</div>
+    <div id="track-trigger" onclick="alert('Order Status: Under Review.\nRef: PT-DANTSU-2026')">🔍 Track Order</div>
+    <a id="chat-trigger" href="https://wa.me/6281118895901" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35" alt="WhatsApp">
+    </a>
 
     <footer class="footer-main">
         <h3>INDONESIA DIGITAL FOUNDATION</h3>
@@ -116,26 +90,22 @@
 
     <footer class="footer-legal">
         <p><strong>© 2026 PT DANTSU CIPTA ENERGY. All Rights Reserved.</strong></p>
-        <p style="max-width: 800px; margin: 10px auto; opacity:0.8;">
-            All services provided via Indonesia Digital Foundation are governed by international business regulations. 
-            Data confidentiality is strictly enforced.
-        </p>
         <div class="footer-links">
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Corporate Identity</a>
+            <a href="terms.html">Terms & Conditions</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="about.html">Corporate Identity</a>
         </div>
     </footer>
 
     <script>
         const modalData = {
-            'Student Services': "Please share your academic history for admission analysis.",
-            'AI Solutions': "Describe your business challenge for an AI-driven solution.",
-            'Excel Systems': "Upload or describe your workflow for automation design.",
-            'Online Stores': "Specify your niche and expected scale for eCommerce setup.",
-            'Fin-Tech': "Outline your payment or financial system requirements.",
-            'Legal Support': "Briefly state your corporate legal requirements for review.",
-            'AI Business Booster': "Executive Growth Program - High-priority management review."
+            'Student Services': "Please share your academic history for analysis.",
+            'AI Solutions': "Describe your business challenge for an AI solution.",
+            'Excel Systems': "Share your workflow for automation design.",
+            'Online Stores': "Specify your niche for eCommerce setup.",
+            'Fin-Tech': "Outline your payment system requirements.",
+            'Legal Support': "Briefly state your corporate legal requirements.",
+            'AI Business Booster': "Executive Growth Program - Management review."
         };
 
         function openModal(name) {
@@ -144,24 +114,7 @@
             document.getElementById('service-modal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
-        function submitOrder() { alert("Success! Your request is now under AI & Management review."); closeModal(); }
-        
-        function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function sendChat() {
-            const msg = document.getElementById('chat-msg').value;
-            if(!msg) return;
-            const body = document.getElementById('chat-body');
-            body.innerHTML += `<div style="text-align:right; color:#102a43; margin-top:10px;"><b>You:</b> ${msg}</div>`;
-            document.getElementById('chat-msg').value = "";
-            setTimeout(() => {
-                body.innerHTML += `<div style="text-align:left; color:#d4af37; margin-top:10px;"><b>AI:</b> Analysis started. Connecting to Director...</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 1000);
-        }
+        function submitOrder() { alert("Success! Request sent."); closeModal(); }
 
         function pulseFounders() {
             const f1 = document.getElementById('founder1'); const f2 = document.getElementById('founder2');
